@@ -10,6 +10,7 @@
   <title>Watch Nordic™</title>
   <meta name="description" content="Watch Nordic har en film for alle." />
 
+  <!-- Ressurser & Stilark -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -19,49 +20,198 @@
   <link rel="stylesheet" href="css/hoveddside.css" />
   <link rel="stylesheet" href="css/innlogging.css" />
   <link rel="stylesheet" href="css/player.css">
+
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <header class="top-nav">
-  <div class="nav-left">
-    <a href="Hovedside.html" 
-       hx-get="Hovedside.html #hovedinnhold" 
-       hx-target="#hovedinnhold" 
-       hx-swap="innerHTML" 
-       hx-push-url="true" 
-       class="watch-logo-svg">
-      <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic">
-    </a>
-  </div>
 
-  <nav class="nav-links">
-    <a href="Hovedside.html" hx-get="Hovedside.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-house"></i> Hjem</a>
-    <a href="Serier.html" hx-get="Serier.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-tv"></i> Serier</a>
-    <a href="Film.html" hx-get="Film.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-clapperboard"></i> Filmer</a>
-    <a href="Nyheter.html" hx-get="Nyheter.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-star"></i> Watch Originals</a>
-    <a href="Min-Liste.html" hx-get="Min-Liste.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-bookmark"></i> Min Liste</a>
-  </nav>
+  <!-- ==========================================
+       GLOBAL TOPPMENY (Vises når man er innlogget)
+  =========================================== -->
+  <header class="top-nav" id="global-header">
+    <div class="nav-left">
+      <a href="#hovedside" class="watch-logo-svg">
+        <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic">
+      </a>
+    </div>
 
-  <div class="nav-right">
-    <a href="Søk.html" hx-get="Søk.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true" class="nav-search" aria-label="Søk">
-      <i class="fas fa-search"></i>
-    </a>
+    <nav class="nav-links">
+      <a href="#hovedside" class="nav-link active"><i class="fas fa-house"></i> Hjem</a>
+      <a href="#serier" class="nav-link"><i class="fas fa-tv"></i> Serier</a>
+      <a href="#filmer" class="nav-link"><i class="fas fa-clapperboard"></i> Filmer</a>
+      <a href="#originals" class="nav-link"><i class="fas fa-star"></i> Watch Originals</a>
+      <a href="#min-liste" class="nav-link"><i class="fas fa-bookmark"></i> Min Liste</a>
+    </nav>
 
-    <a href="hvem-ser-på.html" class="profilmeny" id="profilmenyLink">
-      <div class="profil-avatar-wrap">
-        <div class="profil-avatar-bg"></div>
-        <img id="menyProfilbilde" src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785856037/Muffins_profil_100_k1qd4h.png" alt="Profilbilde" class="profil-avatar-img" />
+    <div class="nav-right">
+      <a href="#sok" class="nav-search" aria-label="Søk">
+        <i class="fas fa-search"></i>
+      </a>
+
+      <a href="#hvem-ser-pa" class="profilmeny" id="profilmenyLink">
+        <div class="profil-avatar-wrap">
+          <div class="profil-avatar-bg"></div>
+          <img id="menyProfilbilde" src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785856037/Muffins_profil_100_k1qd4h.png" alt="Profilbilde" class="profil-avatar-img" />
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       SPA-HOVEDBEHOLDER (ALLE SIDER)
+  =========================================== -->
+  <main id="hovedinnhold">
+
+    <!-- 1. INTRO / LANDINGSSIDE -->
+    <section id="view-intro" class="view-page active">
+      <div class="intro-container">
+        <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic" class="intro-logo">
+        <h1>Ubegrenset strømming av nordiske filmer og serier</h1>
+        <p>Se hvor som helst. Avslutt når som helst.</p>
+        <div class="intro-actions">
+          <button id="btn-goto-login" class="btn-primary">Logg inn</button>
+          <button id="btn-goto-register" class="btn-secondary">Opprett konto</button>
+        </div>
       </div>
-    </a>
-  </div>
-</header>
-  
+    </section>
 
-  <main>
-    <!-- Alt det nye hovedinnholdet ditt plasseres her -->
+    <!-- 2. INNLOGGING / REGISTRERING -->
+    <section id="view-innlogging" class="view-page hidden">
+      <div class="auth-card">
+        <h2>Logg inn på Watch Nordic</h2>
+        <form id="login-form">
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="login-email" placeholder="E-post" required />
+          </div>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="login-password" placeholder="Passord" required />
+          </div>
+          <button type="submit" class="btn-primary">Logg inn</button>
+        </form>
+        <button id="btn-back-to-intro" class="btn-link">Tilbake til start</button>
+      </div>
+    </section>
+
+    <!-- 3. HVEM SER PÅ? (PROFILVELGER) -->
+    <section id="view-hvem-ser-pa" class="view-page hidden">
+      <div class="profile-picker-container">
+        <h1>Hvem ser på?</h1>
+        <div class="profiles-grid">
+          <div class="profile-card" data-profile="voksen">
+            <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785856037/Muffins_profil_100_k1qd4h.png" alt="Profil 1" />
+            <span>Muffins</span>
+          </div>
+          <div class="profile-card" data-profile="barn">
+            <img src="https://via.placeholder.com/100" alt="Barn" />
+            <span>Barn</span>
+          </div>
+          <div class="profile-add-card">
+            <i class="fas fa-circle-plus"></i>
+            <span>Legg til profil</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HOVEDSIDE (FORSIDE FOR STRØMMING) -->
+    <section id="view-hovedside" class="view-page hidden">
+      <div class="hero-banner">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="badge-original"><i class="fas fa-star"></i> Watch Original</span>
+          <h1 class="hero-title">Nordisk Mørke</h1>
+          <p class="hero-description">En nervepirrende krimserie satt i det nordnorske vinterlandskapet.</p>
+          <div class="hero-buttons">
+            <button class="btn-play" id="hero-play-btn"><i class="fas fa-play"></i> Spill av</button>
+            <button class="btn-info" id="hero-info-btn"><i class="fas fa-circle-info"></i> Mer info</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-rows">
+        <section class="media-row">
+          <h2 class="row-title">Fortsett å se</h2>
+          <div class="media-carousel" id="continue-watching-container"></div>
+        </section>
+
+        <section class="media-row">
+          <h2 class="row-title">Populært nå</h2>
+          <div class="media-carousel" id="popular-container"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- 5. FILMLAYOUT / DETALJSIDE FOR FILM ELLER SERIE -->
+    <section id="view-filmlayout" class="view-page hidden">
+      <button id="details-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i> Tilbake</button>
+      <div class="details-hero">
+        <div class="details-backdrop"></div>
+        <div class="details-header-info">
+          <h1 id="details-title">Filmtittel</h1>
+          <p id="details-meta">2026 • 2t 15m • 16+</p>
+          <p id="details-desc">Beskrivelse av filmen eller serien legges inn her dynamisk.</p>
+          <div class="details-actions">
+            <button class="btn-primary" id="details-play-btn"><i class="fas fa-play"></i> Spill av</button>
+            <button class="btn-secondary" id="details-add-list-btn"><i class="fas fa-plus"></i> Min liste</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PROFIL / INNSTILLINGER -->
+    <section id="view-profil" class="view-page hidden">
+      <div class="account-container">
+        <h2>Min Konto</h2>
+        <div class="account-card">
+          <div class="account-user-info">
+            <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785856037/Muffins_profil_100_k1qd4h.png" alt="Profilbilde" />
+            <div>
+              <h3 id="account-name">Muffins</h3>
+              <p id="account-email">bruker@watchnordic.no</p>
+            </div>
+          </div>
+          <hr />
+          <div class="account-settings">
+            <button class="btn-secondary">Endre passord</button>
+            <button class="btn-secondary">Abonnement & Betaling</button>
+            <button id="btn-logout" class="btn-danger"><i class="fas fa-right-from-bracket"></i> Logg ut</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer>
-    <!-- Eventuell bunntekst eller meny -->
+  <!-- ==========================================
+       7. PLAYER (FULLSKJERM VIDEOAVSPILLER)
+  =========================================== -->
+  <div id="view-player" class="modal-overlay hidden">
+    <button id="close-player-btn" class="close-modal-btn" aria-label="Lukk avspiller">
+      <i class="fas fa-xmark"></i>
+    </button>
+    <div class="player-container">
+      <video id="main-video-player" controls preload="metadata">
+        <source src="" type="video/mp4" />
+        Nettleseren din støtter ikke videoavspilling.
+      </video>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       GLOBAL FOOTER
+  =========================================== -->
+  <footer class="site-footer" id="global-footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#">Vilkår for bruk</a>
+        <a href="#">Personvern</a>
+        <a href="#">Hjelpesenter</a>
+        <a href="#">Kontakt oss</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Watch Nordic™. Alle rettigheter reservert.</p>
+    </div>
   </footer>
 
   <script type="module" src="./js/app.js"></script>
