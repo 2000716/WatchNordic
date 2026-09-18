@@ -21,10 +21,40 @@
   <link rel="stylesheet" href="css/player.css">
 </head>
 <body>
+    <header class="top-nav">
+  <div class="nav-left">
+    <a href="Hovedside.html" 
+       hx-get="Hovedside.html #hovedinnhold" 
+       hx-target="#hovedinnhold" 
+       hx-swap="innerHTML" 
+       hx-push-url="true" 
+       class="watch-logo-svg">
+      <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic">
+    </a>
+  </div>
 
-  <header>
-    <!-- Din nye toppseksjon / logo / meny -->
-  </header>
+  <nav class="nav-links">
+    <a href="Hovedside.html" hx-get="Hovedside.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-house"></i> Hjem</a>
+    <a href="Serier.html" hx-get="Serier.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-tv"></i> Serier</a>
+    <a href="Film.html" hx-get="Film.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-clapperboard"></i> Filmer</a>
+    <a href="Nyheter.html" hx-get="Nyheter.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-star"></i> Watch Originals</a>
+    <a href="Min-Liste.html" hx-get="Min-Liste.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true"><i class="fas fa-bookmark"></i> Min Liste</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="Søk.html" hx-get="Søk.html #hovedinnhold" hx-target="#hovedinnhold" hx-swap="innerHTML" hx-push-url="true" class="nav-search" aria-label="Søk">
+      <i class="fas fa-search"></i>
+    </a>
+
+    <a href="hvem-ser-på.html" class="profilmeny" id="profilmenyLink">
+      <div class="profil-avatar-wrap">
+        <div class="profil-avatar-bg"></div>
+        <img id="menyProfilbilde" src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785856037/Muffins_profil_100_k1qd4h.png" alt="Profilbilde" class="profil-avatar-img" />
+      </div>
+    </a>
+  </div>
+</header>
+  
 
   <main>
     <!-- Alt det nye hovedinnholdet ditt plasseres her -->
