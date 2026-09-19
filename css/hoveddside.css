@@ -1,922 +1,922 @@
-{
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      font-family: Arial, sans-serif;
-      background: #050F11;
-      color: #ffffff;
-      overflow-x: hidden;
-    }
-
-    main {
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    @media (max-width: 768px) {
-      html, body {
-        background: #091B1E !important;
-      }
-    }
-
-    /* ==========================================================================
-        3. HERO BANNER (PC)
-        ========================================================================== */
-    .hero-banner {
-      position: relative;
-      height: 85vh;
-      min-height: 600px;
-      width: 100%;
-      overflow: hidden;
-      background-color: #050F11;
-      margin-bottom: 40px;
-      z-index: 0;
-    }
-
-    .hero-banner::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(5, 15, 17, 0) 40%,
-        rgba(5, 15, 17, 0.4) 65%,
-        rgba(5, 15, 17, 0.85) 85%,
-        rgba(5, 15, 17, 1) 100%
-      );
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .hero-banner::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(5, 15, 17, 0.9) 0%,
-        rgba(5, 15, 17, 0.45) 35%,
-        transparent 65%
-      );
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .banner-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .banner-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-      z-index: 0;
-    }
-
-    .banner-content {
-      position: absolute;
-      bottom: 14%;
-      left: 60px;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-      max-width: 650px;
-      color: #ffffff;
-      opacity: 0;
-      animation: contentFadeIn 0.8s ease-out 0.3s forwards;
-    }
-
-    @keyframes contentFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .banner-title {
-      font-size: 64px;        
-      font-weight: 900;
-      line-height: 1.05;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .film-logo {
-      width: 320px;
-      max-width: 80%;
-      max-height: 180px;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
-    }
-
-    .banner-meta {
-      font-size: 16px;         
-      color: #ffffff;            
-      font-weight: 600;            
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.6); 
-      margin-top: 4px;        
-    }
-
-    .banner-content p {
-      font-size: 16px;
-      line-height: 1.5;
-      color: #e0e0e0;
-      max-width: 550px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-
-    .banner-buttons {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .watch-button {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      padding: 12px 34px;
-      border-radius: 50px;
-      border: none;
-      background: #00FFCC;
-      color: #003a2f;
-      cursor: pointer;        
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .watch-button:hover {
-      transform: scale(1.03);
-      background: #00e6b8;
-    }
-
-    .add-button {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-      backdrop-filter: blur(6px);
-    }
-
-    .add-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: #ffffff;
-      transform: scale(1.05);
-    }
-
-    /* ==========================================================================
-        4. FORTSETT Å SE & GALLERIER (PC)
-        ========================================================================== */
-    .gallery-section, .continue-watching-section {
-      margin: 0 auto 45px;
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 1400px; 
-      overflow: visible;
-    }
-
-    .gallery-section h2, .continue-watching-section h2 {
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      color: #ffffff; 
-      margin-bottom: 10px;
-      margin-left: 10px; 
-    }
-
-    .gallery-wrapper, .continue-gallery-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: visible;
-    }
-
-    .image-gallery, .continue-image-gallery {
-      flex: 1;
-      display: flex;
-      overflow-x: auto;
-      overflow-y: visible;
-      gap: 16px;
-      padding: 15px 10px; 
-      scroll-behavior: smooth;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .image-gallery::-webkit-scrollbar, .continue-image-gallery::-webkit-scrollbar {
-      display: none;
-    }
-
-    .image-gallery a, .gallery-item {
-      display: inline-block;
-      position: relative;
-      border-radius: 8px;
-      background: #050F11;
-      border: 3px solid transparent;
-      padding: 4px;
-      transition: border-color 0.3s ease, transform 0.3s ease;
-      overflow: hidden !important;
-      flex-shrink: 0 !important;    
-    }
-
-    .image-gallery a img, .gallery-item img {
-      width: 330px !important;
-      height: 175px !important;
-      aspect-ratio: 2.2 / 1;
-      object-fit: cover;
-      border-radius: 4px;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    /* ==================== FORTSETT Å SE OPPSETT ==================== */
-    .continue-image-gallery .continue-item {
-      display: flex;
-      flex-direction: column;
-      width: 330px;
-      flex-shrink: 0 !important;
-      text-decoration: none;
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-
-    .continue-media-wrap {
-      position: relative;
-      width: 100%;
-      height: 175px;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #050F11;
-      border: 3px solid transparent;
-      padding: 4px;
-      transition: border-color 0.3s ease;
-    }
-
-    .continue-media-wrap img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover;
-      border-radius: 4px;
-      display: block;
-    }
-
-    .continue-media-wrap .progress-bar {
-      position: absolute;
-      bottom: 4px;
-      left: 4px;
-      height: 4px;
-      width: calc(100% - 8px);
-      background-color: rgba(255, 255, 255, 0.3);
-      z-index: 4;
-    }
-
-    .continue-media-wrap .progress-bar::after {
-      content: '';
-      position: absolute;
-      height: 100%;
-      left: 0;
-      top: 0;
-      background-color: #00FFCC;
-      width: var(--progress, 0%);
-      transition: width 0.3s ease;
-    }
-
-    .continue-title {
-      margin-top: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding-left: 2px;
-    }
-
-    .delete-progress-btn {
-      position: absolute;
-      bottom: 16px;
-      left: 16px;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background-color: rgba(5, 15, 17, 0.7); 
-      border: none;
-      outline: none;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.25s ease, transform 0.2s ease, background-color 0.25s ease, color 0.25s ease;
-      backdrop-filter: blur(4px);
-    }
-
-    .delete-progress-btn:hover {
-      background-color: #00FFCC;
-      border: none;
-      color: #050F11;
-      transform: scale(1.1);
-    }
-
-    .continue-item:hover .delete-progress-btn {
-      opacity: 1;
-    }
-
-    @media (pointer: coarse) {
-      .delete-progress-btn {
-        opacity: 1 !important;
-        background-color: rgba(5, 15, 17, 0.85);
-      }
-    }
-
-    /* ==========================================================================
-        5. TOP 10 GALLERI (STØRRE)
-        ========================================================================== */
-    .top10-gallery {
-      display: flex;
-      flex-direction: row;
-      gap: 40px; 
-      padding: 20px 50px; 
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .top10-gallery::-webkit-scrollbar { display: none; }
-
-    .top10-item {
-      position: relative;
-      display: inline-block;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      flex-shrink: 0 !important;
-    }
-
-    .top10-item img {
-      width: 200px;  
-      height: 300px; 
-      object-fit: cover; 
-      border-radius: 8px;
-      display: block;
-    }
-
-    .top10-number {
-      position: absolute;
-      bottom: -15px; 
-      left: -20px;    
-      font-size: 90px; 
-      font-weight: 900;
-      line-height: 1;
-      color: transparent;
-      -webkit-text-stroke: 4px #00FFCC; /* Endret til grønn farge (#00FFCC) */
-      z-index: 2;
-      transition: all 0.3s ease;
-      pointer-events: none;
-    }
-
-    /* ==========================================================================
-        7. BARNE BANNER & SPESIALINNHOLD
-        ========================================================================== */
-    .kids-banner {
-      position: relative;
-      width: calc(100% - 80px); 
-      margin: 20px auto;
-      height: 220px;
-      border-radius: 16px;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .kids-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .kids-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(5,15,17,0.9), rgba(5,15,17,0.2));
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-left: 40px;
-    }
-
-    .kids-overlay h2 {
-      font-size: 28px;
-      color: #ffffff;
-      margin-bottom: 8px;
-    }
-
-    .kids-overlay p {
-      font-size: 16px;
-      color: #ffffff;
-    }
-
-    /* ==========================================================================
-        8. FOOTER
-        ========================================================================== */
-    .footer {
-      width: 100%;
-      padding: 70px 80px 35px;
-      margin-top: 100px;
-      background: #050F11;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      color: #7d7d7d;
-    }
-
-    .footer-socials {
-      display: flex;
-      gap: 22px;
-      margin-bottom: 35px;
-    }
-
-    .footer-socials a {
-      color: #9b9b9b;
-      font-size: 20px;
-      transition: color 0.25s ease, transform 0.25s ease;
-    }
-
-    .footer-socials a:hover {
-      color: #ffffff;
-      transform: scale(1.08);
-    }
-
-    .footer-links {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(140px, 1fr));
-      gap: 18px 50px;
-      margin-bottom: 35px;
-    }
-
-    .footer-links a {
-      color: #8a8a8a;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 1.5;
-      transition: color 0.2s ease;
-    }
-
-    .footer-links a:hover { color: #ffffff; }
-
-    .footer-service-btn {
-      margin-bottom: 28px;
-      padding: 10px 18px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 4px;
-      background: transparent;
-      color: #a0a0a0;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .footer-service-btn:hover {
-      border-color: rgba(255,255,255,0.45);
-      color: #ffffff;
-    }
-
-    .footer-copy {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 8px;
-    }
-
-    .footer-bottom {
-      max-width: 700px;
-      font-size: 12px;
-      line-height: 1.6;
-      color: #555;
-    }
-
-    /* ==========================================================================
-        9. HOVER EFFEKTER KUN FOR ENHETER MED MUS (PC / LAPTOP)
-        ========================================================================== */
-    @media (hover: hover) {
-      /* Vanlige gallerier */
-      .image-gallery a:hover, .gallery-item:hover {
-        z-index: 999;
-        transform: scale(1.05);
-        border-color: #ffffff;
-      }
-
-      /* Fortsett å se-kort */
-      .continue-item:hover {
-        z-index: 999;
-        transform: scale(1.05);
-      }
-      .continue-item:hover .continue-media-wrap {
-        border-color: #ffffff;
-      }
-
-      /* Top 10 galleri */
-      .top10-item:hover { 
-        transform: scale(1.05); 
-        outline: 3px solid #ffffff; 
-        outline-offset: 2px;
-        border-radius: 8px;
-      }
-
-      .top10-item:hover .top10-number {
-        color: #00FFCC; /* Endret til grønn farge ved hover i stedet for hvit */
-        -webkit-text-stroke: 0;
-      }
-
-      /* Piler */
-      .scroll-button {
-        display: flex;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        transform: none;
-        width: 90px; 
-        height: 100%;
-        border-radius: 0;
-        background: transparent;
-        border: none;
-        color: #ffffff;
-        font-size: 32px;
-        cursor: pointer;
-        z-index: 1001; 
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s ease;
-        backdrop-filter: none;
-        user-select: none;
-      }
-
-      .scroll-button.left { 
-        left: 0; 
-        background: linear-gradient(to right, 
-          rgba(5, 15, 17, 1) 0%, 
-          rgba(5, 15, 17, 0.85) 40%, 
-          rgba(5, 15, 17, 0.4) 75%, 
-          rgba(5, 15, 17, 0) 100%
-        );
-      }
-      
-      .scroll-button.right { 
-        right: 0; 
-        background: linear-gradient(to left, 
-          rgba(5, 15, 17, 1) 0%, 
-          rgba(5, 15, 17, 0.85) 40%, 
-          rgba(5, 15, 17, 0.4) 75%, 
-          rgba(5, 15, 17, 0) 100%
-        );
-      }
-
-      .scroll-button.left i { margin-right: 25px; }
-      .scroll-button.right i { margin-left: 25px; }
-
-      .scroll-button i {
-        position: relative;
-        z-index: 2;
-        transition: transform 0.2s ease, color 0.2s ease;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-      }
-
-      .scroll-button:hover i {
-        color: #ffffff; 
-        transform: scale(1.25);
-      }
-
-      .gallery-wrapper:hover .scroll-button:not(.hidden),
-      .continue-gallery-wrapper:hover .scroll-button:not(.hidden) {
-        opacity: 1;
-        pointer-events: auto;
-      }
-    }
-
-    /* ==========================================================================
-        10. MOBIL-OPTIMALISERING (HORISONTALE GALLERIER PÅ MOBIL)
-        ========================================================================== */
-    @media (max-width: 768px) {
-      html, body {
-        background: #091B1E !important;
-        padding-bottom: 0 !important; 
-      }
-
-      main {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-      }
-
-      /* HERO BANNER MOBIL */
-      .hero-banner {
-        height: 55vh !important; 
-        min-height: 360px !important;
-        max-height: 500px !important;
-        margin-bottom: 20px !important;
-        background-color: #091B1E !important;
-      }
-
-      .hero-banner::after {
-        background: linear-gradient(to bottom, rgba(9, 27, 30, 0) 40%, rgba(9, 27, 30, 0.4) 60%, rgba(9, 27, 30, 0.8) 80%, #091B1E 100%) !important;
-      }
-
-      .banner-content {
-        bottom: 20px !important;
-        left: 20px !important;
-        max-width: calc(100% - 40px);
-        gap: 8px !important;
-      }
-
-      .film-logo {
-        width: 180px !important;
-        max-height: 75px !important;
-        object-fit: contain !important;
-        filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.5));
-      }
-
-      .banner-title { font-size: 28px !important; }
-
-      .banner-content p {
-        font-size: 12px !important;
-        line-height: 1.4;
-        color: #cccccc;
-        -webkit-line-clamp: 2;
-      }
-
-      .banner-meta { font-size: 11px !important; }
-      .banner-buttons { gap: 10px !important; margin-top: 4px; }
-
-      .watch-button {
-        font-size: 13px !important;
-        padding: 8px 22px !important;
-        font-weight: 700;
-        border-radius: 8px; 
-      }
-
-      .add-button {
-        width: 36px !important;
-        height: 36px !important;
-        font-size: 14px !important;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      /* GENERELLE SEKSJONER PÅ MOBIL */
-      .gallery-section, .continue-watching-section {
-        margin-left: 0 !important; 
-        margin-right: 0 !important;
-        margin-bottom: 32px !important;
-        padding: 0 16px; 
-      }
-
-      .gallery-section h2, .continue-watching-section h2 {
-        padding-left: 0 !important; 
-        margin-left: 0 !important;
-        font-size: 16px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        color: #ffffff; 
-        margin-bottom: 8px;
-      }
-
-      .scroll-button { display: none !important; }
-
-      /* ALLE STANDARD GALLERIER */
-      .image-gallery,
-      .coming-movies-gallery,
-      .top10-gallery,
-      .continue-image-gallery,
-      .gallery-section .image-gallery,
-      .gallery-section .coming-movies-gallery,
-      .gallery-section .top10-gallery,
-      .gallery-section .movies-gallery {
-        display: flex !important;
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        gap: 12px !important;
-        padding: 4px 0 12px 0 !important;
-        scroll-snap-type: x mandatory !important;
-        scroll-behavior: smooth !important;
-        -webkit-overflow-scrolling: touch !important;
-      }
-
-      .gallery-section .image-gallery a, 
-      .gallery-section .gallery-item {
-        width: 130px !important;
-        flex-shrink: 0 !important;
-        scroll-snap-align: start !important;
-        position: relative !important;
-        background: #091B1E !important;
-        border: 3px solid transparent !important;
-        padding: 3px !important;
-      }
-
-      .gallery-section .image-gallery a img, 
-      .gallery-section .gallery-item img, 
-      .gallery-section .image-gallery img {
-        width: 100% !important;
-        height: 195px !important;
-        aspect-ratio: 2 / 3 !important;
-        object-fit: cover !important;
-        border-radius: 6px !important;
-      }
-
-      /* TOP 10 GALLERI (MOBIL) */
-      .gallery-section .top10-item {
-        width: 155px !important;
-        flex-shrink: 0 !important;
-        scroll-snap-align: start !important;
-        position: relative !important;
-      }
-
-      .gallery-section .top10-item img {
-        width: 100% !important;
-        height: 232px !important;
-        aspect-ratio: 2 / 3 !important;
-        object-fit: cover !important;
-        border-radius: 10px !important;
-      }
-
-      .top10-number {
-        font-size: 44px !important;
-        left: 2px !important;
-        bottom: 2px !important;
-        -webkit-text-stroke: 1.5px #00FFCC !important; /* Endret til grønn på mobil også */
-      }
-
-      /* KUN FILM-GALLERIET */
-      #alle-filmer-seksjon .gallery-item,
-      #alle-filmer-seksjon a,
-      #filmer-galleri .gallery-item,
-      #filmer-galleri a {
-        width: 100px !important; 
-        flex-shrink: 0 !important;
-      }
-
-      #alle-filmer-seksjon img,
-      #filmer-galleri img {
-        width: 100% !important;
-        height: 150px !important; 
-        aspect-ratio: 2 / 3 !important;
-        object-fit: cover !important;
-        border-radius: 6px !important;
-      }
-
-      /* "FORTSETT Å SE" (MOBIL) */
-      .continue-watching-section .continue-image-gallery {
-        display: flex !important;
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        gap: 12px !important;
-        padding: 4px 0 12px 0 !important;
-        scroll-snap-type: x mandatory !important;
-        scroll-behavior: smooth !important;
-        -webkit-overflow-scrolling: touch !important;
-      }
-
-      .continue-image-gallery .continue-item {
-        width: 260px !important;
-        flex-shrink: 0 !important;
-        scroll-snap-align: start !important;
-        border-radius: 12px !important;
-        display: block !important;
-        text-decoration: none !important;
-        transform: none !important;
-        transition: none !important;
-      }
-
-      .continue-media-wrap {
-        width: 260px !important;
-        height: 146px !important;
-        border-radius: 10px !important;
-        overflow: hidden !important; 
-        position: relative !important;
-        flex-shrink: 0 !important;
-        background: #091B1E !important;
-        border: 3px solid transparent !important;
-        padding: 3px !important;
-      }
-
-      .continue-media-wrap img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        border-radius: 6px !important;
-      }
-
-      .continue-title {
-        font-size: 13px !important;
-        margin-top: 6px !important;
-        display: block !important;
-        color: #ffffff !important;
-      }
-
-      /* EKSTRA SEKSJONER */
-      .kids-banner {
-        height: 120px !important;
-        margin: 20px 16px !important; 
-        width: calc(100% - 32px) !important;
-        border-radius: 12px !important;
-      }
-      
-      .kids-overlay { 
-        padding-left: 20px !important; 
-        background: linear-gradient(to right, rgba(9,27,30,0.9), rgba(9,27,30,0.2)) !important;
-        border-radius: 12px !important;
-      }
-      .kids-overlay h2 { font-size: 18px !important; margin-bottom: 2px; }
-      .kids-overlay p { font-size: 12px !important; }
-
-      .footer {
-        display: flex !important;
-        padding: 40px 20px 35px !important; 
-        margin-top: 50px !important;
-        background: #091B1E !important;
-      }
-      .footer-links {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 15px 20px !important;
-      }
-    }
-
-    /* ==========================================================================
-        11. NØDBREMS (PORTRETT PÅ LANDSKAP PÅ MOBIL)
-        ========================================================================== */
-    @media screen and (orientation: landscape) and (max-width: 900px) {
-      body {
-        overflow: hidden !important;
-      }
-
-      body::after {
-        content: "Vennligst roter telefonen til portrett-modus for å bruke appen.";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #091B1E;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        z-index: 999999;
-        padding: 20px;
-      }
-    }
-
-    /* ==========================================================================
-        12. SKJUL TITTEL OG METADATA HELT (MEN BEHOLDES I KODEN)
-        ========================================================================== */
-    .gallery-item .overlay-title,
-    .gallery-item .overlay-meta,
-    .continue-item .overlay-title,
-    .continue-item .overlay-meta {
-      display: none !important;
-     }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: Arial, sans-serif;
+  background: #050F11;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    background: #091B1E !important;
+  }
+}
+
+/* ==========================================================================
+   3. HERO BANNER (PC)
+   ========================================================================== */
+.hero-banner {
+  position: relative;
+  height: 85vh;
+  min-height: 600px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #050F11;
+  margin-bottom: 40px;
+  z-index: 0;
+}
+
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 15, 17, 0) 40%,
+    rgba(5, 15, 17, 0.4) 65%,
+    rgba(5, 15, 17, 0.85) 85%,
+    rgba(5, 15, 17, 1) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(5, 15, 17, 0.9) 0%,
+    rgba(5, 15, 17, 0.45) 35%,
+    transparent 65%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  z-index: 0;
+}
+
+.banner-content {
+  position: absolute;
+  bottom: 14%;
+  left: 60px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 650px;
+  color: #ffffff;
+  opacity: 0;
+  animation: contentFadeIn 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.banner-title {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.film-logo {
+  width: 320px;
+  max-width: 80%;
+  max-height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
+}
+
+.banner-meta {
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  margin-top: 4px;
+}
+
+.banner-content p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #e0e0e0;
+  max-width: 550px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.banner-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.watch-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 34px;
+  border-radius: 50px;
+  border: none;
+  background: #00FFCC;
+  color: #003a2f;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.watch-button:hover {
+  transform: scale(1.03);
+  background: #00e6b8;
+}
+
+.add-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(6px);
+}
+
+.add-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   4. FORTSETT Å SE & GALLERIER (PC)
+   ========================================================================== */
+.gallery-section, .continue-watching-section {
+  margin: 0 auto 45px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  overflow: visible;
+}
+
+.gallery-section h2, .continue-watching-section h2 {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.gallery-wrapper, .continue-gallery-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.image-gallery, .continue-image-gallery {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: visible;
+  gap: 16px;
+  padding: 15px 10px;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.image-gallery::-webkit-scrollbar, .continue-image-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.image-gallery a, .gallery-item {
+  display: inline-block;
+  position: relative;
+  border-radius: 8px;
+  background: #050F11;
+  border: 3px solid transparent;
+  padding: 4px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+.image-gallery a img, .gallery-item img {
+  width: 330px !important;
+  height: 175px !important;
+  aspect-ratio: 2.2 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* ==================== FORTSETT Å SE OPPSETT ==================== */
+.continue-image-gallery .continue-item {
+  display: flex;
+  flex-direction: column;
+  width: 330px;
+  flex-shrink: 0 !important;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.continue-media-wrap {
+  position: relative;
+  width: 100%;
+  height: 175px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #050F11;
+  border: 3px solid transparent;
+  padding: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.continue-media-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.continue-media-wrap .progress-bar {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  height: 4px;
+  width: calc(100% - 8px);
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 4;
+}
+
+.continue-media-wrap .progress-bar::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #00FFCC;
+  width: var(--progress, 0%);
+  transition: width 0.3s ease;
+}
+
+.continue-title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 2px;
+}
+
+.delete-progress-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(5, 15, 17, 0.7);
+  border: none;
+  outline: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.2s ease, background-color 0.25s ease, color 0.25s ease;
+  backdrop-filter: blur(4px);
+}
+
+.delete-progress-btn:hover {
+  background-color: #00FFCC;
+  border: none;
+  color: #050F11;
+  transform: scale(1.1);
+}
+
+.continue-item:hover .delete-progress-btn {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .delete-progress-btn {
+    opacity: 1 !important;
+    background-color: rgba(5, 15, 17, 0.85);
+  }
+}
+
+/* ==========================================================================
+   5. TOP 10 GALLERI (STØRRE)
+   ========================================================================== */
+.top10-gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding: 20px 50px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.top10-gallery::-webkit-scrollbar { display: none; }
+
+.top10-item {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  flex-shrink: 0 !important;
+}
+
+.top10-item img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.top10-number {
+  position: absolute;
+  bottom: -15px;
+  left: -20px;
+  font-size: 90px;
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 4px #00FFCC;
+  z-index: 2;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   7. BARNE BANNER & SPESIALINNHOLD
+   ========================================================================== */
+.kids-banner {
+  position: relative;
+  width: calc(100% - 80px);
+  margin: 20px auto;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.kids-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kids-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(5,15,17,0.9), rgba(5,15,17,0.2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+}
+
+.kids-overlay h2 {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.kids-overlay p {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   8. FOOTER
+   ========================================================================== */
+.footer {
+  width: 100%;
+  padding: 70px 80px 35px;
+  margin-top: 100px;
+  background: #050F11;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #7d7d7d;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 22px;
+  margin-bottom: 35px;
+}
+
+.footer-socials a {
+  color: #9b9b9b;
+  font-size: 20px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-socials a:hover {
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.footer-links {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 18px 50px;
+  margin-bottom: 35px;
+}
+
+.footer-links a {
+  color: #8a8a8a;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover { color: #ffffff; }
+
+.footer-service-btn {
+  margin-bottom: 28px;
+  padding: 10px 18px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: #a0a0a0;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.footer-service-btn:hover {
+  border-color: rgba(255,255,255,0.45);
+  color: #ffffff;
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.footer-bottom {
+  max-width: 700px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* ==========================================================================
+   9. HOVER EFFEKTER KUN FOR ENHETER MED MUS (PC / LAPTOP)
+   ========================================================================== */
+@media (hover: hover) {
+  /* Vanlige gallerier */
+  .image-gallery a:hover, .gallery-item:hover {
+    z-index: 999;
+    transform: scale(1.05);
+    border-color: #ffffff;
+  }
+
+  /* Fortsett å se-kort */
+  .continue-item:hover {
+    z-index: 999;
+    transform: scale(1.05);
+  }
+  .continue-item:hover .continue-media-wrap {
+    border-color: #ffffff;
+  }
+
+  /* Top 10 galleri */
+  .top10-item:hover {
+    transform: scale(1.05);
+    outline: 3px solid #ffffff;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  .top10-item:hover .top10-number {
+    color: #00FFCC;
+    -webkit-text-stroke: 0;
+  }
+
+  /* Piler */
+  .scroll-button {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transform: none;
+    width: 90px;
+    height: 100%;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 1001;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    backdrop-filter: none;
+    user-select: none;
+  }
+
+  .scroll-button.left {
+    left: 0;
+    background: linear-gradient(to right,
+      rgba(5, 15, 17, 1) 0%,
+      rgba(5, 15, 17, 0.85) 40%,
+      rgba(5, 15, 17, 0.4) 75%,
+      rgba(5, 15, 17, 0) 100%
+    );
+  }
+
+  .scroll-button.right {
+    right: 0;
+    background: linear-gradient(to left,
+      rgba(5, 15, 17, 1) 0%,
+      rgba(5, 15, 17, 0.85) 40%,
+      rgba(5, 15, 17, 0.4) 75%,
+      rgba(5, 15, 17, 0) 100%
+    );
+  }
+
+  .scroll-button.left i { margin-right: 25px; }
+  .scroll-button.right i { margin-left: 25px; }
+
+  .scroll-button i {
+    position: relative;
+    z-index: 2;
+    transition: transform 0.2s ease, color 0.2s ease;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  }
+
+  .scroll-button:hover i {
+    color: #ffffff;
+    transform: scale(1.25);
+  }
+
+  .gallery-wrapper:hover .scroll-button:not(.hidden),
+  .continue-gallery-wrapper:hover .scroll-button:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ==========================================================================
+   10. MOBIL-OPTIMALISERING (HORISONTALE GALLERIER PÅ MOBIL)
+   ========================================================================== */
+@media (max-width: 768px) {
+  html, body {
+    background: #091B1E !important;
+    padding-bottom: 0 !important;
+  }
+
+  main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* HERO BANNER MOBIL */
+  .hero-banner {
+    height: 55vh !important;
+    min-height: 360px !important;
+    max-height: 500px !important;
+    margin-bottom: 20px !important;
+    background-color: #091B1E !important;
+  }
+
+  .hero-banner::after {
+    background: linear-gradient(to bottom, rgba(9, 27, 30, 0) 40%, rgba(9, 27, 30, 0.4) 60%, rgba(9, 27, 30, 0.8) 80%, #091B1E 100%) !important;
+  }
+
+  .banner-content {
+    bottom: 20px !important;
+    left: 20px !important;
+    max-width: calc(100% - 40px);
+    gap: 8px !important;
+  }
+
+  .film-logo {
+    width: 180px !important;
+    max-height: 75px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.5));
+  }
+
+  .banner-title { font-size: 28px !important; }
+
+  .banner-content p {
+    font-size: 12px !important;
+    line-height: 1.4;
+    color: #cccccc;
+    -webkit-line-clamp: 2;
+  }
+
+  .banner-meta { font-size: 11px !important; }
+  .banner-buttons { gap: 10px !important; margin-top: 4px; }
+
+  .watch-button {
+    font-size: 13px !important;
+    padding: 8px 22px !important;
+    font-weight: 700;
+    border-radius: 8px;
+  }
+
+  .add-button {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* GENERELLE SEKSJONER PÅ MOBIL */
+  .gallery-section, .continue-watching-section {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 32px !important;
+    padding: 0 16px;
+  }
+
+  .gallery-section h2, .continue-watching-section h2 {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    margin-bottom: 8px;
+  }
+
+  .scroll-button { display: none !important; }
+
+  /* ALLE STANDARD GALLERIER */
+  .image-gallery,
+  .coming-movies-gallery,
+  .top10-gallery,
+  .continue-image-gallery,
+  .gallery-section .image-gallery,
+  .gallery-section .coming-movies-gallery,
+  .gallery-section .top10-gallery,
+  .gallery-section .movies-gallery {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 12px !important;
+    padding: 4px 0 12px 0 !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .gallery-section .image-gallery a,
+  .gallery-section .gallery-item {
+    width: 130px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    position: relative !important;
+    background: #091B1E !important;
+    border: 3px solid transparent !important;
+    padding: 3px !important;
+  }
+
+  .gallery-section .image-gallery a img,
+  .gallery-section .gallery-item img,
+  .gallery-section .image-gallery img {
+    width: 100% !important;
+    height: 195px !important;
+    aspect-ratio: 2 / 3 !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
+  }
+
+  /* TOP 10 GALLERI (MOBIL) */
+  .gallery-section .top10-item {
+    width: 155px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    position: relative !important;
+  }
+
+  .gallery-section .top10-item img {
+    width: 100% !important;
+    height: 232px !important;
+    aspect-ratio: 2 / 3 !important;
+    object-fit: cover !important;
+    border-radius: 10px !important;
+  }
+
+  .top10-number {
+    font-size: 44px !important;
+    left: 2px !important;
+    bottom: 2px !important;
+    -webkit-text-stroke: 1.5px #00FFCC !important;
+  }
+
+  /* KUN FILM-GALLERIET */
+  #alle-filmer-seksjon .gallery-item,
+  #alle-filmer-seksjon a,
+  #filmer-galleri .gallery-item,
+  #filmer-galleri a {
+    width: 100px !important;
+    flex-shrink: 0 !important;
+  }
+
+  #alle-filmer-seksjon img,
+  #filmer-galleri img {
+    width: 100% !important;
+    height: 150px !important;
+    aspect-ratio: 2 / 3 !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
+  }
+
+  /* "FORTSETT Å SE" (MOBIL) */
+  .continue-watching-section .continue-image-gallery {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 12px !important;
+    padding: 4px 0 12px 0 !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .continue-image-gallery .continue-item {
+    width: 260px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    border-radius: 12px !important;
+    display: block !important;
+    text-decoration: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .continue-media-wrap {
+    width: 260px !important;
+    height: 146px !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    background: #091B1E !important;
+    border: 3px solid transparent !important;
+    padding: 3px !important;
+  }
+
+  .continue-media-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
+  }
+
+  .continue-title {
+    font-size: 13px !important;
+    margin-top: 6px !important;
+    display: block !important;
+    color: #ffffff !important;
+  }
+
+  /* EKSTRA SEKSJONER */
+  .kids-banner {
+    height: 120px !important;
+    margin: 20px 16px !important;
+    width: calc(100% - 32px) !important;
+    border-radius: 12px !important;
+  }
+
+  .kids-overlay {
+    padding-left: 20px !important;
+    background: linear-gradient(to right, rgba(9,27,30,0.9), rgba(9,27,30,0.2)) !important;
+    border-radius: 12px !important;
+  }
+  .kids-overlay h2 { font-size: 18px !important; margin-bottom: 2px; }
+  .kids-overlay p { font-size: 12px !important; }
+
+  .footer {
+    display: flex !important;
+    padding: 40px 20px 35px !important;
+    margin-top: 50px !important;
+    background: #091B1E !important;
+  }
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px 20px !important;
+  }
+}
+
+/* ==========================================================================
+   11. NØDBREMS (PORTRETT PÅ LANDSKAP PÅ MOBIL)
+   ========================================================================== */
+@media screen and (orientation: landscape) and (max-width: 900px) {
+  body {
+    overflow: hidden !important;
+  }
+
+  body::after {
+    content: "Vennligst roter telefonen til portrett-modus for å bruke appen.";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #091B1E;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 999999;
+    padding: 20px;
+  }
+}
+
+/* ==========================================================================
+   12. SKJUL TITTEL OG METADATA HELT (MEN BEHOLDES I KODEN)
+   ========================================================================== */
+.gallery-item .overlay-title,
+.gallery-item .overlay-meta,
+.continue-item .overlay-title,
+.continue-item .overlay-meta {
+  display: none !important;
+}
