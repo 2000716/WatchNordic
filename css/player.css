@@ -1,1 +1,850 @@
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    user-select: none;
+    -webkit-user-select: none;
+  }
 
+  body { 
+    background: #000; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    overflow: hidden; 
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* Skjuler musepekeren ved inaktivitet */
+  body.no-cursor, 
+  body.no-cursor * {
+    cursor: none !important;
+  }
+
+  /* CONTAINER & VIDEOWRAPPER */
+  .container { 
+    position: relative; 
+    width: 100vw; 
+    height: 100vh; 
+    overflow: hidden; 
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.6s ease-in-out;
+  }
+
+  #videoWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 2;
+  }
+
+  #videoWrapper.video-fullscreen {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    z-index: 2 !important;
+    transform: none !important;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* UNDERTEKSTER */
+  video::cue {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px !important;
+    font-weight: 400;
+    color: #ffffff;
+    background: transparent !important;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+
+  .subtitle-overlay {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    text-align: center;
+    pointer-events: none;
+    z-index: 5;
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-shadow: 0px 2px 6px rgba(0,0,0,1), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    transition: bottom 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .subtitle-overlay.subtitle-up {
+    bottom: 16%;
+  }
+
+  /* STRØMME-UI OG KONTROLLER */
+  .ui {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+    z-index: 20;
+  }
+
+  .ui.hidden { 
+    opacity: 0; 
+    pointer-events: none; 
+  }
+
+  .ui:not(.hidden) .top-bar,
+  .ui:not(.hidden) .controls,
+  .ui:not(.hidden) .progress-container,
+  .ui:not(.hidden) .caption-menu {
+    pointer-events: auto;
+  }
+
+  /* TOPPBAR */
+  .top-bar {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    padding: 25px 30px 60px 30px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .back-button, 
+  .back-button:visited, 
+  .back-button:hover, 
+  .back-button:active { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    text-decoration: none !important;
+    outline: none;
+  }
+  .back-button:hover { transform: scale(1.1); }
+
+  .movie-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+
+  .watermark {
+    position: absolute;
+    top: 25px; right: 30px;
+    width: 55px;
+    opacity: 0.4;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* KONTROLLER I BUNN */
+  .controls {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px 25px 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);
+  }
+
+  .left-controls, .right-controls {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    min-width: 150px;
+  }
+  .right-controls { justify-content: flex-end; }
+
+  .center-controls {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 35px;
+  }
+
+  .btn { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: transform 0.15s ease;
+    padding: 5px;
+  }
+  .btn:hover { transform: scale(1.15); }
+  .btn:active { transform: scale(0.95); }
+
+  /* VOLUMKONTROLL */
+  .volume-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    z-index: 30;
+    pointer-events: auto;
+  }
+
+  .volume-slider-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: 0;
+    opacity: 0;
+    transition: max-width 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+  }
+
+  .volume-container:hover .volume-slider-wrapper,
+  .volume-container:focus-within .volume-slider-wrapper {
+    max-width: 110px;
+    opacity: 1;
+    padding: 0 5px; 
+  }
+
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #ffffff var(--volume-percent, 100%), rgba(255, 255, 255, 0.3) var(--volume-percent, 100%));
+    outline: none;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff; 
+    box-shadow: none;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff; 
+    box-shadow: none;
+    cursor: pointer;
+    transform: scale(1); 
+    transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .volume-slider::-webkit-slider-thumb:hover,
+  .volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.25) !important;
+  }
+
+  /* PROGRESS BAR */
+  .progress-container {
+    position: absolute;
+    bottom: 85px;
+    left: 0;
+    width: 100%;
+    padding: 0 40px;
+    z-index: 22;
+  }
+
+  .progress {
+    width: 100%;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .progress-filled {
+    width: 0%;
+    height: 100%;
+    background: #ffffff; 
+    border-radius: 6px;
+    box-shadow: none; 
+    transition: width 0.1s linear;
+  }
+
+  .thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 20px; 
+    height: 20px; 
+    background: #ffffff; 
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: none; 
+    transition: transform 0.15s ease;
+    z-index: 30;
+  }
+
+  .progress-container:hover .thumb { 
+    transform: translate(-50%, -50%) scale(1.15); 
+  }
+  .thumb:hover {
+    transform: translate(-50%, -50%) scale(1.2) !important; 
+  }
+
+  .time-display {
+    position: absolute;
+    bottom: 102px; 
+    right: 40px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 22;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* MENYER & OVERLAYS */
+  .caption-menu {
+    position: absolute;
+    bottom: 95px;
+    right: 40px;
+    background: rgba(15, 15, 15, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: none;
+    min-width: 240px;
+    z-index: 100;
+  }
+
+  .caption-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+
+  .caption-menu-close {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .caption-menu-grid { display: flex; gap: 15px; }
+  .caption-column { flex: 1; }
+
+  .caption-column-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .caption-track-list button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    margin: 3px 0;
+    background: transparent;
+    color: #eee;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .caption-track-list button:hover, 
+  .caption-track-list button.active {
+    background: #0fddcb;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .preview-box {
+    position: absolute;
+    bottom: 110px;
+    width: 220px;
+    height: 124px;
+    background: #000;
+    border: 2px solid #0fddcb;
+    border-radius: 6px;
+    overflow: hidden;
+    display: none;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+  }
+  .preview-box img { width: 100%; height: 100%; object-fit: cover; }
+  
+  .preview-time {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 0;
+    background: rgba(0,0,0,0.7);
+    position: absolute;
+    bottom: 0; width: 100%;
+    text-align: center;
+  }
+
+  .loading-spinner {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 65px; height: 65px;
+    margin: -32.5px 0 0 -32.5px;
+    border: 5px solid rgba(255,255,255,0.1);
+    border-top: 5px solid #0fddcb; 
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    z-index: 4;
+    display: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .resume-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+  }
+  
+  .resume-box {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 35px 40px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  
+  .resume-box p { font-size: 19px; color: #fff; margin-bottom: 25px; font-weight: 300; }
+  .resume-buttons { display: flex; gap: 15px; justify-content: center; }
+  
+  .resume-buttons button {
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .resume-buttons button:active { transform: scale(0.97); }
+
+  #continueBtn { background: #0fddcb; color: #000; } 
+  #continueBtn:hover { background: #0bc4b4; }
+  #restartBtn { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+  #restartBtn:hover { background: rgba(255,255,255,0.2); }
+
+
+  /* ==========================================================================
+     2. SERIE- OG NEDTELLINGSFUNKSJONER (SYNKSJONERT MED HTML)
+     ========================================================================== */
+
+  /* KNAPPER FOR INTRO/OUTRO & NESTE EPISODE INNI KONTROLLERNE */
+  #nextEpisodeBtn {
+    display: none;
+    color: white;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-right: 15px;
+    transition: background 0.2s ease;
+  }
+  #nextEpisodeBtn:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .skip-btn {
+    position: absolute;
+    right: 30px;
+    bottom: 110px;
+    display: none;
+    padding: 12px 24px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    z-index: 25;
+    transition: all 0.2s;
+  }
+  .skip-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* FORBEDRET OVERLAY FOR AUTOPLAY / SERIENEDTELLING */
+  #autoplayOverlay {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 8%;
+    background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0.3) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 50;
+    color: #ffffff;
+    pointer-events: auto;
+  }
+
+  .autoplay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 520px;
+  }
+
+  .autoplay-serie-logo {
+    max-height: 60px;
+    width: auto;
+    margin-bottom: 15px;
+    object-fit: contain;
+  }
+
+  .autoplay-episode-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .autoplay-ep-tag {
+    text-transform: uppercase;
+    color: #0fddcb;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .autoplay-ep-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .autoplay-ep-desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .autoplay-action-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  /* Sirkulær nedtellingselement (Matchet mot SVG i HTML) */
+  .autoplay-circle-timer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+  }
+
+  .timer-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .timer-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 3;
+  }
+
+  .timer-progress {
+    fill: none;
+    stroke: #0fddcb;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 100, 100;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+  }
+
+  .timer-number {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    z-index: 2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .autoplay-btn {
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .autoplay-btn:active {
+    transform: scale(0.96);
+  }
+
+  #autoplayPlayNextBtn { 
+    background: #0fddcb; 
+    color: #000000; 
+    box-shadow: 0 4px 15px rgba(15, 221, 203, 0.3);
+  }
+  #autoplayPlayNextBtn:hover { 
+    background: #12f3df; 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 221, 203, 0.4);
+  }
+
+  #autoplayCancelBtn { 
+    background: rgba(255, 255, 255, 0.1); 
+    color: #ffffff; 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+  }
+  #autoplayCancelBtn:hover { 
+    background: rgba(255, 255, 255, 0.2); 
+  }
+
+
+  /* ==========================================================================
+     3. RESPONSIVE REGLER (MOBIL / SKJERMSTØRRELLER)
+     ========================================================================== */
+
+  @media (max-width: 768px) {
+    .top-bar { padding: 15px 20px; }
+    .movie-title { font-size: 16px; margin-left: 12px; }
+    .watermark { top: 15px; right: 20px; width: 40px; }
+
+    /* Portrettmodus */
+    @media (orientation: portrait) {
+      .center-controls {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        gap: 35px;
+        z-index: 30;
+        pointer-events: auto;
+        display: flex !important;
+      }
+
+      .center-controls .btn {
+        background: rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 50%;
+        width: 65px; height: 65px;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .center-controls .btn svg, 
+      .center-controls .btn i {
+        transform: scale(1.4) !important; 
+        color: #ffffff;
+      }
+
+      .controls { padding: 20px; padding-bottom: 35px; }
+      .left-controls { display: none !important; }
+
+      .right-controls {
+        width: 100%;
+        justify-content: space-between; 
+        gap: 20px;
+        display: flex !important;
+      }
+
+      .right-controls .btn {
+        background: rgba(255, 255, 255, 0.15) !important;
+        padding: 12px 20px;
+        border-radius: 8px;
+        height: auto;
+        min-width: 50px;
+      }
+      
+      .right-controls .btn svg,
+      .right-controls .btn i {
+        transform: scale(1.1) !important;
+      }
+
+      .progress-container { bottom: 95px; padding: 0 20px; }
+      .progress { height: 5px; background: rgba(255, 255, 255, 0.2); }
+      .thumb { width: 22px; height: 22px; transform: translate(-50%, -50%) scale(1) !important; }
+
+      .time-display {
+        bottom: 110px; right: 20px;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      .subtitle-overlay { font-size: 20px; width: 85%; bottom: 20%; }
+      .caption-menu { bottom: 145px; right: 20px; left: 20px; min-width: calc(100% - 40px); }
+      .preview-box { bottom: 120px; }
+
+      /* Responsiv serie-nedtelling på mobil */
+      #autoplayOverlay { 
+        padding: 30px 24px; 
+        justify-content: center; 
+        align-items: center;
+        background: rgba(0, 0, 0, 0.94);
+      }
+
+      .autoplay-content {
+        align-items: center;
+        text-align: center;
+      }
+
+      .autoplay-ep-title {
+        font-size: 22px;
+        max-width: 100%;
+      }
+
+      .autoplay-circle-timer {
+        width: 50px;
+        height: 50px;
+      }
+
+      .timer-number {
+        font-size: 18px;
+      }
+
+      .autoplay-action-row {
+        flex-direction: column-reverse;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .autoplay-btn {
+        width: 100%;
+        padding: 14px;
+      }
+    }
+
+    /* Landskapsmodus */
+    @media (orientation: landscape) {
+      .controls { padding: 15px 20px 20px 20px; }
+      .left-controls, .right-controls { min-width: auto; gap: 16px; }
+      .center-controls { gap: 24px; }
+      .btn { padding: 10px; }
+      .btn svg, .btn i { transform: scale(0.9); }
+      .progress-container { bottom: 70px; padding: 0 20px; }
+      .progress { height: 5px; }
+      .thumb { transform: translate(-50%, -50%) scale(1) !important; width: 16px; height: 16px; }
+      .time-display { bottom: 85px; right: 20px; font-size: 11px; }
+      .subtitle-overlay { font-size: 18px; width: 90%; bottom: 8%; }
+      .subtitle-overlay.subtitle-up { bottom: 22%; }
+      .caption-menu { bottom: 85px; right: 20px; min-width: 160px; padding: 12px; }
+      .preview-box { bottom: 90px; }
+
+      #autoplayOverlay {
+        padding-left: 6%;
+      }
+
+      .autoplay-ep-title {
+        font-size: 24px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .movie-title { max-width: 140px; }
+    #nextEpisodeBtn { font-size: 11px !important; }
+    
+    @media (orientation: portrait) {
+      .center-controls { gap: 25px; }
+      .center-controls .btn { width: 55px; height: 55px; }
+    }
