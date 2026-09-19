@@ -20,6 +20,9 @@
   <link rel="stylesheet" href="css/hoveddside.css" />
   <link rel="stylesheet" href="css/innlogging.css" />
   <link rel="stylesheet" href="css/player.css">
+  <link rel="stylesheet" href="css/hvem-ser-på.css" />
+  <link rel="stylesheet" href="css/meny.css" />
+  <link rel="stylesheet" href="css/konto.css">
 
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
@@ -58,7 +61,7 @@
   </header>
 
   <!-- Loader for dynamisk innhold -->
-  <div id="page-loader">
+  <div id="page-loader" aria-live="polite">
     <div class="spinner"></div>
   </div>
 
@@ -69,31 +72,27 @@
   =========================================== -->
   <main id="hovedinnhold">
 
-    <!-- ==========================================
-          1. side
-    =========================================== -->
+    <!-- 1. Intro -->
     <section id="view-intro" class="view-page active">
       <div class="intro-container">
         <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic" class="intro-logo">
         <h1>Ubegrenset strømming av nordiske filmer og serier</h1>
         <p>Se hvor som helst. Avslutt når som helst.</p>
         <div class="intro-actions">
-          <button id="btn-goto-login" class="btn-primary">Logg inn</button>
-          <button id="btn-goto-register" class="btn-secondary">Opprett konto</button>
+          <button type="button" id="btn-goto-login" class="btn-primary">Logg inn</button>
+          <button type="button" id="btn-goto-register" class="btn-secondary">Opprett konto</button>
         </div>
       </div>
     </section>
 
-    <!-- ==========================================
-          2. innlogging 
-    =========================================== -->
-    <section id="view-innlogging" class="view-page hidden">
+    <!-- 2. Innlogging -->
+    <section id="view-innlogging" class="view-page hidden" aria-hidden="true">
       <div class="container">
         <h1 id="formTitle">Logg inn på Watch Nordic</h1>
         <p class="subtitle" id="formSubtitle">Skriv inn e-postadressen din for å fortsette</p>
 
         <form id="authForm">
-          <!-- TRINN 1: SKRIV INN E-POST -->
+          <!-- TRINN 1: E-POST -->
           <div id="steg1" class="step-content">
             <div class="input-group">
               <label for="epost">E-postadresse</label>
@@ -102,7 +101,7 @@
             <button type="button" class="submit-btn" id="nesteKnapp">Neste</button>
           </div>
 
-          <!-- TRINN 2: SKRIV INN PASSORD -->
+          <!-- TRINN 2: PASSORD -->
           <div id="steg2" class="step-content" style="display: none;">
             <div class="selected-email-badge">
               <span id="visEpostTekst"></span>
@@ -121,14 +120,14 @@
                 <button type="button" class="password-toggle" id="passwordToggle" aria-label="Vis passord">Vis</button>
               </div>
               <div class="forgot-text" id="forgotContainer">
-                <a href="Passordfeil.html">Glemt passord?</a>
+                <a href="#glemt-passord">Glemt passord?</a>
               </div>
             </div>
 
             <button type="submit" class="submit-btn" id="submitKnapp">Logg inn</button>
           </div>
 
-          <div class="error" id="feilmelding"></div>
+          <div class="error" id="feilmelding" role="alert"></div>
         </form>
 
         <div class="toggle-text" id="toggleText">
@@ -137,13 +136,11 @@
       </div>
     </section>
 
-    <!-- ==========================================
-          3. hvem ser på?
-    =========================================== -->
-    <section id="view-hvem-ser-pa" class="view-page hidden">
+    <!-- 3. Hvem ser på? -->
+    <section id="view-hvem-ser-pa" class="view-page hidden" aria-hidden="true">
       <div class="top-bar">
         <img src="https://static.wixstatic.com/media/d9ace9_081ea242211b45a2801873c3067e1205~mv2.png" alt="Logo" class="logo-img">
-        <a href="konto.html?index=0" class="account-btn" id="kontoLink">
+        <a href="#view-profil" class="account-btn" id="kontoLink">
           <i class="fa-solid fa-gear"></i> Konto
         </a>
       </div>
@@ -153,7 +150,8 @@
         <div class="profiles" id="profiles"></div>
       </div>
 
-      <div class="modal" id="addProfileModal">
+      <!-- Modaler -->
+      <div class="modal" id="addProfileModal" role="dialog" aria-modal="true">
         <div class="modal-content">
           <h2>Opprett ny profil</h2>
           <input type="text" id="newProfileName" placeholder="Skriv profilnavn..." maxlength="15">
@@ -164,13 +162,13 @@
           </label>
 
           <div class="modal-actions">
-            <button class="btn-create" id="btnCreateProfile">Opprett profil</button>
-            <button class="btn-close" id="btnCloseModal">Avbryt</button>
+            <button type="button" class="btn-create" id="btnCreateProfile">Opprett profil</button>
+            <button type="button" class="btn-close" id="btnCloseModal">Avbryt</button>
           </div>
         </div>
       </div>
 
-      <div class="pin-modal" id="pinModal">
+      <div class="pin-modal" id="pinModal" role="dialog" aria-modal="true">
         <div class="pin-modal-content">
           <h2>Skriv koden</h2>
           <p class="pin-profile-name" id="pinProfileName">Profil</p>
@@ -192,20 +190,16 @@
           </div>
 
           <div class="pin-actions">
-            <button class="btn-create" id="btnConfirmPin">Bekreft</button>
-            <button class="btn-close" id="btnClosePin">Avbryt</button>
+            <button type="button" class="btn-create" id="btnConfirmPin">Bekreft</button>
+            <button type="button" class="btn-close" id="btnClosePin">Avbryt</button>
           </div>
-          <div class="pin-error" id="pinError"></div>
+          <div class="pin-error" id="pinError" role="alert"></div>
         </div>
       </div>
     </section>
 
-    <!-- ==========================================
-          4. hoveddside - strømmesiden
-    =========================================== -->
-    <section id="view-hovedside" class="view-page hidden">
-      
-      <!-- HERO BANNER TITTEL & INNHOLD -->
+    <!-- 4. Hovedside -->
+    <section id="view-hovedside" class="view-page hidden" aria-hidden="true">
       <section class="hero-banner">
         <img class="banner-image" id="banner-bilde" src="https://via.placeholder.com/1920x1080" alt="Film Banner" />
         <video id="banner-video" class="banner-video" playsinline preload="none"></video>
@@ -217,114 +211,42 @@
           <p id="banner-beskrivelse">En nervepirrende krimserie satt i det nordnorske vinterlandskapet. Når en hemmelighet avdekkes på fjellet, endres alt.</p>
           <div id="banner-metadata" class="banner-meta">2026 • 16+ • 2t 15m</div>
           <div class="banner-buttons">
-            <button class="watch-button" id="banner-se-na">
+            <button type="button" class="watch-button" id="banner-se-na">
               <i class="fas fa-play"></i> Se nå
             </button>
-            <button class="add-button" id="banner-add" aria-label="Legg til i min liste">
+            <button type="button" class="add-button" id="banner-add" aria-label="Legg til i min liste">
               <i class="fas fa-plus"></i>
             </button>
           </div>
         </div>
       </section>
 
-      <!-- RAD 1: NYLIG LAGT TIL -->
+      <!-- Galleri-rader -->
       <section class="gallery-section" id="nye-filmer-seksjon">
         <h2>Nylig lagt til</h2>
         <div class="gallery-wrapper">
           <div class="fade-left"></div>
-          <button class="scroll-button left">❮</button>
-          <div class="image-gallery" id="nye-filmer-galleri">
-            <a href="Film-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Film"></a>
-            <a href="Film-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Film"></a>
-            <a href="Film-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Film"></a>
-          </div>
-          <button class="scroll-button right">❯</button>
+          <button type="button" class="scroll-button left" aria-label="Rull til venstre">❮</button>
+          <div class="image-gallery" id="nye-filmer-galleri"></div>
+          <button type="button" class="scroll-button right" aria-label="Rull til høyre">❯</button>
           <div class="fade-right"></div>
         </div>
       </section>
 
-      <!-- RAD 2: FORTSETT Å SE -->
       <section class="continue-watching-section" id="fortsett-section" style="display:none;">
         <h2>Fortsett å se</h2>
         <div class="continue-gallery-wrapper">
           <div class="fade-left"></div>
-          <button class="scroll-button left" aria-label="Rull til venstre">❮</button>
+          <button type="button" class="scroll-button left" aria-label="Rull til venstre">❮</button>
           <div class="continue-image-gallery" id="fortsett-galleri"></div>
-          <button class="scroll-button right" aria-label="Rull til høyre">❯</button>
-          <div class="fade-right"></div>
-        </div>
-      </section>
-
-      <!-- RAD 3: FILMTOPPEN -->
-      <section class="gallery-section" id="topp10-seksjon">
-        <h2>Filmtoppen!</h2>
-        <div class="gallery-wrapper">
-          <div class="fade-left"></div>
-          <button class="scroll-button left">❮</button>
-          <div class="top10-gallery" id="topp10-filmer-galleri">
-            <div class="top10-item">
-              <img src="https://via.placeholder.com/150x225" alt="Topp 1">
-              <span class="top10-number">1</span>
-            </div>
-            <div class="top10-item">
-              <img src="https://via.placeholder.com/150x225" alt="Topp 2">
-              <span class="top10-number">2</span>
-            </div>
-          </div>
-          <button class="scroll-button right">❯</button>
-          <div class="fade-right"></div>
-        </div>
-      </section>
-
-      <!-- RAD 4: FILMER -->
-      <section class="gallery-section" id="alle-filmer-seksjon">
-        <h2>Filmer</h2>
-        <div class="gallery-wrapper">
-          <div class="fade-left"></div>
-          <button class="scroll-button left">❮</button>
-          <div class="image-gallery" id="filmer-galleri">
-            <a href="Film-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Film"></a>
-            <a href="Film-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Film"></a>
-          </div>
-          <button class="scroll-button right">❯</button>
-          <div class="fade-right"></div>
-        </div>
-      </section>
-
-      <!-- RAD 5: SERIER -->
-      <section class="gallery-section" id="serier-seksjon">
-        <h2>Serier</h2>
-        <div class="gallery-wrapper">
-          <div class="fade-left"></div>
-          <button class="scroll-button left">❮</button>
-          <div class="image-gallery" id="serier-galleri">
-            <a href="Serie-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Serie"></a>
-            <a href="Serie-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Serie"></a>
-          </div>
-          <button class="scroll-button right">❯</button>
-          <div class="fade-right"></div>
-        </div>
-      </section>
-
-      <!-- RAD 6: DOKUMENTARSERIER -->
-      <section class="gallery-section" id="dokumentar-seksjon">
-        <h2>Dokumentarserier</h2>
-        <div class="gallery-wrapper">
-          <div class="fade-left"></div>
-          <button class="scroll-button left">❮</button>
-          <div class="image-gallery" id="dokumentarserier-galleri">
-            <a href="Dokumentar-detail.html" class="gallery-item"><img src="https://via.placeholder.com/330x175" alt="Dokumentar"></a>
-          </div>
-          <button class="scroll-button right">❯</button>
+          <button type="button" class="scroll-button right" aria-label="Rull til høyre">❯</button>
           <div class="fade-right"></div>
         </div>
       </section>
     </section>
 
-    <!-- ==========================================
-          5. filmlayout film og serie
-    =========================================== -->
-    <section id="view-filmlayout" class="view-page hidden">
+    <!-- 5. Filmlayout (Detaljside) -->
+    <section id="view-filmlayout" class="view-page hidden" aria-hidden="true">
       <div class="hero">
         <img class="background-image" id="backgroundImage" src="" alt="Bakgrunnsbilde" />
         <video id="trailerVideo" class="background-video" muted playsinline></video>
@@ -333,8 +255,8 @@
         <div class="bottom-fade"></div>
 
         <div id="videoControls" class="video-controls">
-          <button id="pauseBtn"><i class="fas fa-pause"></i></button>
-          <button id="soundBtn"><i class="fas fa-volume-mute"></i></button>
+          <button type="button" id="pauseBtn" aria-label="Pause"><i class="fas fa-pause"></i></button>
+          <button type="button" id="soundBtn" aria-label="Lyd av/på"><i class="fas fa-volume-mute"></i></button>
         </div>
 
         <div class="content-wrapper">
@@ -345,10 +267,10 @@
           <div class="left-content">
             <div class="text-button-container">
               <div class="buttons-column">
-                <button class="watch-button" id="watchBtn">
+                <button type="button" class="watch-button" id="watchBtn">
                   <i class="fas fa-play"></i><span> Se nå</span>
                 </button>
-                <button class="watch-button" id="addToListBtn">
+                <button type="button" class="watch-button" id="addToListBtn">
                   <i class="fas fa-plus"></i><span> Legg til i Min liste</span>
                 </button>
               </div>
@@ -370,23 +292,19 @@
       </div>
     </section>
 
-    <!-- ==========================================
-          6. Profil og Konto
-    =========================================== -->
-    <section id="view-profil" class="view-page hidden">
+    <!-- 6. Profil og Konto -->
+    <section id="view-profil" class="view-page hidden" aria-hidden="true">
       <header>
         <div class="logo-container">
           <img src="https://static.wixstatic.com/media/d9ace9_081ea242211b45a2801873c3067e1205~mv2.png" alt="Watch Nordic Logo" class="logo-image">
         </div>
         <div class="nav-btns">
-          <button id="navHovedsideBtn"><i class="fa-solid fa-house"></i> <span>Hovedside</span></button>
-          <button class="logout-btn" id="navLoggUtBtn"><i class="fa-solid fa-right-from-bracket"></i> <span>Logg Ut</span></button>
+          <button type="button" id="navHovedsideBtn"><i class="fa-solid fa-house"></i> <span>Hovedside</span></button>
+          <button type="button" class="logout-btn" id="navLoggUtBtn"><i class="fa-solid fa-right-from-bracket"></i> <span>Logg Ut</span></button>
         </div>
       </header>
 
       <div class="container">
-        
-        <!-- TOPPKORT MED PROFILBILDE -->
         <div class="profile-header">
           <div class="profile-info">
             <h1 id="navnDisplay">Laster...</h1>
@@ -408,11 +326,11 @@
                 <div class="value" id="navnView">Laster...</div>
                 <div id="editNavnBox" class="edit-box hidden">
                   <input type="text" id="nyttNavnInput" placeholder="Nytt navn">
-                  <button class="btn-save" id="lagreNavnBtn">Lagre</button>
-                  <button class="btn-cancel" id="avbrytNavnBtn">Avbryt</button>
+                  <button type="button" class="btn-save" id="lagreNavnBtn">Lagre</button>
+                  <button type="button" class="btn-cancel" id="avbrytNavnBtn">Avbryt</button>
                 </div>
               </div>
-              <button class="edit-trigger" id="endreNavnKnapp">Endre</button>
+              <button type="button" class="edit-trigger" id="endreNavnKnapp">Endre</button>
             </div>
             
             <div class="row">
@@ -436,8 +354,8 @@
 
                 <div id="editPinBox" class="edit-box hidden">
                   <input type="password" id="nyPinInput" placeholder="Skriv ny kode">
-                  <button class="btn-save" id="lagrePinBtn">Lagre</button>
-                  <button class="btn-cancel" id="avbrytPinBtn">Avbryt</button>
+                  <button type="button" class="btn-save" id="lagrePinBtn">Lagre</button>
+                  <button type="button" class="btn-cancel" id="avbrytPinBtn">Avbryt</button>
                 </div>
                 <div class="pin-hint">Slå på for å aktivere eller deaktivere koden.</div>
               </div>
@@ -451,12 +369,12 @@
                 <div class="label">Aktiv økt</div>
                 <div class="value">Nettleser (Norge)</div>
               </div>
-              <button class="edit-trigger" id="loggutAlleBtn">Logg ut alle enheter</button>
+              <button type="button" class="edit-trigger" id="loggutAlleBtn">Logg ut alle enheter</button>
             </div>
           </div>
 
           <div class="delete-container">
-            <button class="delete-btn" id="sletteKnapp"><i class="fa-solid fa-trash-can"></i> Slett profil permanent</button>
+            <button type="button" class="delete-btn" id="sletteKnapp"><i class="fa-solid fa-trash-can"></i> Slett profil permanent</button>
           </div>
         </section>
       </div>
@@ -464,13 +382,9 @@
 
   </main>
 
-  <!-- ==========================================
-        7. PLAYER (FULLSKJERM VIDEOAVSPILLER)
-  =========================================== -->
-  <div id="view-player" class="modal-overlay hidden">
+  <!-- 7. Spiller -->
+  <div id="view-player" class="modal-overlay hidden" aria-hidden="true">
     <div class="container" id="container">
-      
-      <!-- VIDEOSPILLER -->
       <div id="videoWrapper">
         <video id="video" preload="metadata" playsinline>
           <source src="" type="video/mp4">
@@ -479,36 +393,31 @@
         </video>
       </div>
 
-      <!-- OVERLAYS -->
       <div class="subtitle-overlay" id="subtitleOverlay"></div>
       <div class="loading-spinner" id="loadingSpinner"></div>
 
-      <!-- INTRO / OUTRO KNAPPER -->
-      <button id="skipIntroBtn" class="skip-btn">
+      <button type="button" id="skipIntroBtn" class="skip-btn">
         <i class="fa-solid fa-forward" style="margin-right: 5px;"></i> Hopp over intro
       </button>
 
-      <button id="skipOutroBtn" class="skip-btn">
+      <button type="button" id="skipOutroBtn" class="skip-btn">
         Neste episode <i class="fa-solid fa-forward" style="margin-left: 5px;"></i>
       </button>
 
-      <!-- AUTOPLAY OVERLAY -->
+      <!-- Autoplay Overlay -->
       <div id="autoplayOverlay">
         <div class="autoplay-content">
           <img id="autoplayLogo" class="autoplay-serie-logo" alt="Serie Logo" style="display: none;">
-          
           <div class="autoplay-episode-meta">
             <span id="autoplayEpTag" class="autoplay-ep-tag"></span>
             <span id="autoplayEpTitle" class="autoplay-ep-title"></span>
           </div>
-          
           <p id="autoplayEpDesc" class="autoplay-ep-desc"></p>
-          
           <div class="autoplay-action-row">
-            <button id="autoplayPlayNextBtn" class="autoplay-btn">
+            <button type="button" id="autoplayPlayNextBtn" class="autoplay-btn">
               <i class="fa-solid fa-play"></i> Spill nå
             </button>
-            <button id="autoplayCancelBtn" class="autoplay-btn">Avbryt</button>
+            <button type="button" id="autoplayCancelBtn" class="autoplay-btn">Avbryt</button>
             
             <div class="autoplay-circle-timer">
               <svg class="timer-svg" viewBox="0 0 36 36">
@@ -521,30 +430,29 @@
         </div>
       </div>
 
-      <!-- RESUME DIALOG -->
+      <!-- Resume Overlay -->
       <div id="resumeOverlay" class="resume-overlay">
         <div class="resume-box">
           <p>Vil du fortsette der du slapp?</p>
           <div class="resume-buttons">
-            <button id="continueBtn">Fortsett</button>
-            <button id="restartBtn">Start på nytt</button>
+            <button type="button" id="continueBtn">Fortsett</button>
+            <button type="button" id="restartBtn">Start på nytt</button>
           </div>
         </div>
       </div>
 
-      <!-- HOVED-UI -->
+      <!-- Controls -->
       <div class="ui" id="ui">
-        
         <div class="top-bar">
           <div class="top-bar-left">
-            <a href="#" class="back-button" id="backButton">
+            <button type="button" class="back-button" id="backButton" aria-label="Tilbake">
               <i class="fa-solid fa-chevron-left" style="color: white; font-size: 20px;"></i>
-            </a>
+            </button>
             <div class="movie-title">Laster tittel...</div>
           </div>
           
           <div class="volume-container">
-            <button class="btn" id="muteBtn" title="Lyd av/på">
+            <button type="button" class="btn" id="muteBtn" title="Lyd av/på">
               <i class="fa-solid fa-volume-high" style="color: white; font-size: 18px;"></i>
             </button>
             <div class="volume-slider-wrapper">
@@ -571,36 +479,34 @@
           <div class="left-controls"></div>
 
           <div class="center-controls">
-            <button class="btn" id="rewindBtn" title="10 sekunder tilbake">
+            <button type="button" class="btn" id="rewindBtn" title="10 sekunder tilbake">
               <i class="fa-solid fa-rotate-left" style="color: white; font-size: 20px;"></i>
             </button>
-            <button class="btn" id="playPauseBtn" title="Spill / Pause">
+            <button type="button" class="btn" id="playPauseBtn" title="Spill / Pause">
               <i class="fa-solid fa-play" style="color: white; font-size: 24px;"></i>
             </button>
-            <button class="btn" id="forwardBtn" title="10 sekunder frem">
+            <button type="button" class="btn" id="forwardBtn" title="10 sekunder frem">
               <i class="fa-solid fa-rotate-right" style="color: white; font-size: 20px;"></i>
             </button>
           </div>
 
           <div class="right-controls">
-            <button id="nextEpisodeBtn" class="btn">
+            <button type="button" id="nextEpisodeBtn" class="btn">
               Neste <i class="fa-solid fa-forward" style="margin-left: 3px; font-size: 12px;"></i>
             </button>
-            
-            <button class="btn" id="captionsBtn" title="Undertekster og lydspråk">
+            <button type="button" class="btn" id="captionsBtn" title="Undertekster og lydspråk">
               <i class="fa-solid fa-closed-captioning" style="color: white; font-size: 20px;"></i>
             </button>
-            <button class="btn" id="fullscreenBtn" title="Fullskjerm">
+            <button type="button" class="btn" id="fullscreenBtn" title="Fullskjerm">
               <i class="fa-solid fa-expand" style="color: white; font-size: 20px;"></i>
             </button>
           </div>
         </div>
 
-        <!-- MENY FOR LYD OG UNDERTEKSTER -->
         <div class="caption-menu" id="captionMenu">
           <div class="caption-menu-header">
             <h3>Lyd og undertekster</h3>
-            <button class="caption-menu-close" id="closeCaptionMenuBtn" aria-label="Lukk">
+            <button type="button" class="caption-menu-close" id="closeCaptionMenuBtn" aria-label="Lukk">
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
@@ -608,16 +514,12 @@
           <div class="caption-menu-grid">
             <div class="caption-column">
               <div class="caption-column-title">Lyd</div>
-              <div class="caption-track-list" id="audioTracks">
-                <!-- Dynamisk innhold -->
-              </div>
+              <div class="caption-track-list" id="audioTracks"></div>
             </div>
 
             <div class="caption-column">
               <div class="caption-column-title">Undertekster</div>
-              <div class="caption-track-list" id="subtitleTracks">
-                <!-- Dynamisk innhold -->
-              </div>
+              <div class="caption-track-list" id="subtitleTracks"></div>
             </div>
           </div>
         </div>
@@ -626,13 +528,11 @@
     </div>
   </div>
 
-  <!-- ==========================================
-        GLOBAL FOOTER
-  =========================================== -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-socials">
-      <a href="https://www.instagram.com/watchnordicoriginals?igsh=aWRvcTJmMWl1NGRp&utm_source=qr"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@watchnordicoriginals"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/watchnordicoriginals?igsh=aWRvcTJmMWl1NGRp&utm_source=qr" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@watchnordicoriginals" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
       <a href="#"><i class="fab fa-youtube"></i></a>
     </div>
 
