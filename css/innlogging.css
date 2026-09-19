@@ -1,1 +1,213 @@
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      touch-action: manipulation; 
+    }
 
+    body {
+      background-color: #050F11;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #FFFFFF;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ================= TOPPLINJE / LOGO ================= */
+    .top-nav {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 24px 48px;
+      width: 100%;
+    }
+
+    .watch-logo-svg img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* ================= HOVEDINNHOLD / SKJEMA ================= */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: transparent;
+      max-width: 440px;
+      width: 100%;
+      text-align: left;
+    }
+
+    h2 { 
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px; 
+      color: #ffffff;
+    }
+    
+    p.subtitle {
+      font-size: 16px;
+      color: #93A6A8;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+
+    /* ================= ANIMASJON FOR STEG ================= */
+    .step-content {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .step-content.animating-out {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    .step-content.animating-in {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .selected-email-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+    }
+
+    .selected-email-badge button {
+      background: none;
+      border: none;
+      color: #00FFCC;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .password-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-input-wrap input {
+      padding-right: 84px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: #00FFCC;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 6px 8px;
+    }
+
+    .selected-email-badge button:hover {
+      text-decoration: underline;
+    }
+
+    .input-group {
+      margin-bottom: 22px;
+    }
+
+    label { 
+      display: block; 
+      margin-bottom: 8px; 
+      font-size: 13px; 
+      font-weight: 700;
+      color: #B2C4C6;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    input { 
+      width: 100%; 
+      padding: 18px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15); 
+      border-radius: 8px; 
+      background: rgba(6, 18, 20, 0.8);
+      color: #FFFFFF;
+      font-size: 17px;
+      transition: border-color 0.2s ease;
+    }
+
+    input::placeholder {
+      color: #4A6366;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #00FFCC;
+      background: #061214;
+    }
+
+    button.submit-btn {
+      width: 100%; 
+      padding: 18px;
+      background: #00FFCC;
+      color: #041012; 
+      border: none; 
+      border-radius: 8px;
+      cursor: pointer; 
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+    
+    button.submit-btn:hover { 
+      background: #00E6B8;
+    }
+
+    .error { 
+      color: #FF5252; 
+      margin-top: 14px; 
+      min-height: 20px; 
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .toggle-text, .forgot-text { 
+      margin-top: 26px; 
+      font-size: 15px;
+      color: #93A6A8;
+    }
+    
+    .forgot-text {
+      margin-top: 10px;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .toggle-text a, .forgot-text a { 
+      color: #00FFCC; 
+      cursor: pointer; 
+      text-decoration: none; 
+      font-weight: 700;
+    }
+
+    .toggle-text a:hover, .forgot-text a:hover {
+      text-decoration: underline;
+    }
