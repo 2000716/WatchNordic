@@ -104,7 +104,7 @@ const elements = {
 };
 
 /* ================= 1. INITIALISERING ================= */
-async function initPlayer() {
+export async function initPlayer(router = null) {
   const urlParams = new URLSearchParams(window.location.search);
   const navn = urlParams.get("navn") || urlParams.get("id");
   const sesong = urlParams.get("sesong") || urlParams.get("s");
@@ -884,4 +884,3 @@ function avbrytAutoplay() {
 initPlayer().catch(err => {
   console.error("Kritisk feil ved oppstart av videospiller:", err);
 });
-</script>

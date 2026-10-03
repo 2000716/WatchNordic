@@ -237,4 +237,7 @@
         alert("Kunne ikke logge ut akkurat nå. Prøv igjen.");
       }
     }
-  </script>
+
+    export function initKonto(router = null) {
+      return true;
+    }

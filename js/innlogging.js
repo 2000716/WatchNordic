@@ -321,4 +321,7 @@
         : "Skriv inn passordet ditt";
     }
   }
-</script>
+
+  export function initInnlogging(router = null) {
+    return true;
+  }

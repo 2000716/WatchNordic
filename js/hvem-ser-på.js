@@ -262,4 +262,7 @@
         document.getElementById("btnConfirmPin").click();
       }
     });
-  </script>
+
+  export function initHvemSerPa(router = null) {
+    return true;
+  }

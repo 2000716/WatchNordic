@@ -1,4 +1,8 @@
 // meny.js
+export function initMeny(router = null) {
+  initNav();
+}
+
 function initNav() {
     const navs = Array.from(document.querySelectorAll('.top-nav, .top-menu'));
   
