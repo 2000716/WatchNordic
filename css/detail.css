@@ -1,0 +1,38 @@
+.detail-backdrop {
+  height: 100vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+}
+
+.detail-gradient {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--bg-color) 25%, rgba(13,14,18,0.6) 100%);
+}
+
+.detail-container {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+}
+
+.detail-container h1 {
+  font-size: 52px;
+  margin-bottom: 20px;
+}
+
+.detail-container p {
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.detail-buttons {
+  display: flex;
+  gap: 15px;
+}
