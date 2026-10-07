@@ -1,565 +1,188 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#071e19" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  
-  <title>Watch Nordic™</title>
-  <meta name="description" content="Watch Nordic har en film for alle." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Nordic - Eksklusive Nordiske Originals</title>
 
-  <!-- Ressurser & Stilark -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" href="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  
-  <link rel="stylesheet" href="css/intro.css" />
-  <link rel="stylesheet" href="css/filmlayout.css" />
-  <link rel="stylesheet" href="css/hoveddside.css" />
-  <link rel="stylesheet" href="css/innlogging.css" />
-  <link rel="stylesheet" href="css/player.css">
-  <link rel="stylesheet" href="css/hvem-ser-på.css" />
-  <link rel="stylesheet" href="css/meny.css" />
-  <link rel="stylesheet" href="css/konto.css">
-
-  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <!-- KOBLE TIL EKSTERN CSS (Ligger i mappen: css/style.css) -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- ==========================================
-        GLOBAL TOPPMENY
-  =========================================== -->
-  <header class="top-nav" id="global-header">
-    <div class="nav-left">
-      <a href="#hovedside" class="watch-logo-svg">
-        <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic">
-      </a>
-    </div>
-
-    <nav class="nav-links">
-      <a href="#hovedside" class="nav-link active"><i class="fas fa-house"></i> Hjem</a>
-      <a href="#serier" class="nav-link"><i class="fas fa-tv"></i> Serier</a>
-      <a href="#filmer" class="nav-link"><i class="fas fa-clapperboard"></i> Filmer</a>
-      <a href="#originals" class="nav-link"><i class="fas fa-star"></i> Watch Originals</a>
-      <a href="#min-liste" class="nav-link"><i class="fas fa-bookmark"></i> Min Liste</a>
+  <!-- GLOBAL NAVBAR / TOPPMENY -->
+  <header class="navbar" id="global-navbar">
+    <div class="logo" id="nav-logo">WATCH NORDIC</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#main" id="nav-home">Hjem</a></li>
+        <li><a href="#originals" id="nav-originals">Originals</a></li>
+        <li><a href="#account" id="nav-account-link">Konto</a></li>
+      </ul>
     </nav>
-
-    <div class="nav-right">
-      <a href="#sok" class="nav-search" aria-label="Søk">
-        <i class="fas fa-search"></i>
-      </a>
-
-      <a href="#hvem-ser-pa" class="profilmeny" id="profilmenyLink">
-        <div class="profil-avatar-wrap">
-          <div class="profil-avatar-bg"></div>
-          <img id="menyProfilbilde" src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785856037/Muffins_profil_100_k1qd4h.png" alt="Profilbilde" class="profil-avatar-img" />
-        </div>
-      </a>
+    <div class="nav-user">
+      <button class="btn btn-secondary" id="logout-btn">Logg ut</button>
     </div>
   </header>
 
-  <!-- Loader for dynamisk innhold -->
-  <div id="page-loader" aria-live="polite">
-    <div class="spinner"></div>
-  </div>
+  <!-- APPLIKASJONSCONTAINER FOR SPA-VISNINGER -->
+  <main id="app-container">
 
-  <div id="nav-placeholder"></div>
-
-  <!-- ==========================================
-        SPA-HOVEDBEHOLDER
-  =========================================== -->
-  <main id="hovedinnhold">
-
-    <!-- 1. Intro -->
-    <section id="view-intro" class="view-page active">
-      <div class="intro-container">
-        <img src="https://res.cloudinary.com/ocv4zhpk/image/upload/v1785855892/d9ace9_081ea242211b45a2801873c3067e1205_mv2_vtfrdn.png" alt="Watch Nordic" class="intro-logo">
-        <h1>Ubegrenset strømming av nordiske filmer og serier</h1>
-        <p>Se hvor som helst. Avslutt når som helst.</p>
-        <div class="intro-actions">
-          <button type="button" id="btn-goto-login" class="btn-primary">Logg inn</button>
-          <button type="button" id="btn-goto-register" class="btn-secondary">Opprett konto</button>
-        </div>
+    <!-- 1. STARTSIDE / LANDING VIEW -->
+    <section id="landing-view" class="view active-view">
+      <div class="landing-content">
+        <h1 class="hero-title">Eksklusive nordiske historier.<br>Samlet på ét sted.</h1>
+        <p class="hero-subtitle">100 % egenproduserte nordiske filmer, serier og dokumentarer.</p>
+        <button class="btn btn-primary" id="start-trial-btn">Start din prøveperiode</button>
       </div>
     </section>
 
-    <!-- 2. Innlogging -->
-    <section id="view-innlogging" class="view-page hidden" aria-hidden="true">
-      <div class="container">
-        <h1 id="formTitle">Logg inn på Watch Nordic</h1>
-        <p class="subtitle" id="formSubtitle">Skriv inn e-postadressen din for å fortsette</p>
-
-        <form id="authForm">
-          <!-- TRINN 1: E-POST -->
-          <div id="steg1" class="step-content">
-            <div class="input-group">
-              <label for="epost">E-postadresse</label>
-              <input type="email" id="epost" placeholder="navn@domene.no" autocomplete="email" required />
-            </div>
-            <button type="button" class="submit-btn" id="nesteKnapp">Neste</button>
+    <!-- 2. INNLOGGING VIEW -->
+    <section id="login-view" class="view">
+      <div class="form-card">
+        <h2>Logg inn på Watch Nordic</h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">E-postadresse</label>
+            <input type="email" id="email" placeholder="navn@nordic.no" required>
           </div>
-
-          <!-- TRINN 2: PASSORD -->
-          <div id="steg2" class="step-content" style="display: none;">
-            <div class="selected-email-badge">
-              <span id="visEpostTekst"></span>
-              <button type="button" id="changeEmailBtn">Endre</button>
-            </div>
-
-            <div class="input-group" id="navnGruppe" style="display: none;">
-              <label for="navn">Navn</label>
-              <input type="text" id="navn" placeholder="Ditt fulle navn" autocomplete="name" />
-            </div>
-
-            <div class="input-group">
-              <label for="passord">Passord</label>
-              <div class="password-input-wrap">
-                <input type="password" id="passord" placeholder="••••••••" autocomplete="current-password" />
-                <button type="button" class="password-toggle" id="passwordToggle" aria-label="Vis passord">Vis</button>
-              </div>
-              <div class="forgot-text" id="forgotContainer">
-                <a href="#glemt-passord">Glemt passord?</a>
-              </div>
-            </div>
-
-            <button type="submit" class="submit-btn" id="submitKnapp">Logg inn</button>
+          <div class="form-group">
+            <label for="password">Passord</label>
+            <input type="password" id="password" placeholder="••••••••" required>
           </div>
-
-          <div class="error" id="feilmelding" role="alert"></div>
+          <button type="submit" class="btn btn-primary btn-full">Fortsett</button>
         </form>
+      </div>
+    </section>
 
-        <div class="toggle-text" id="toggleText">
-          Er du ikke medlem? <a href="#" id="toggleModeLink">Registrer deg</a>
+    <!-- 3. HVEM SER PÅ? / PROFILER VIEW -->
+    <section id="profiles-view" class="view">
+      <div class="profiles-wrapper">
+        <h1>Hvem ser på nå?</h1>
+        <div class="profile-grid">
+          <div class="profile-card" data-user="Ole">
+            <div class="avatar avatar-1">O</div>
+            <span class="profile-name">Ole</span>
+          </div>
+          <div class="profile-card" data-user="Karin">
+            <div class="avatar avatar-2">K</div>
+            <span class="profile-name">Karin</span>
+          </div>
+          <div class="profile-card" data-user="Barn">
+            <div class="avatar avatar-3">B</div>
+            <span class="profile-name">Barn</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Hvem ser på? -->
-    <section id="view-hvem-ser-pa" class="view-page hidden" aria-hidden="true">
-      <div class="top-bar">
-        <img src="https://static.wixstatic.com/media/d9ace9_081ea242211b45a2801873c3067e1205~mv2.png" alt="Logo" class="logo-img">
-        <a href="#view-profil" class="account-btn" id="kontoLink">
-          <i class="fa-solid fa-gear"></i> Konto
-        </a>
+    <!-- 4. HOVEDSIDE / KATALOG VIEW -->
+    <section id="main-view" class="view">
+      <!-- HERO BANNER -->
+      <div class="hero-banner">
+        <div class="hero-overlay"></div>
+        <div class="hero-details">
+          <span class="badge">Watch Nordic Original</span>
+          <h1 class="hero-movie-title">ISFJORDEN</h1>
+          <p class="hero-description">
+            En dramatisk nordnorsk spenningsserie produsert eksklusivt for Watch Nordic.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary play-btn" data-video="https://www.w3schools.com/html/mov_bbb.mp4">▶ Spill av</button>
+            <button class="btn btn-secondary info-btn" data-movie-id="isfjorden">Mer info</button>
+          </div>
+        </div>
       </div>
 
-      <div class="container">
-        <h1>Hvem ser på?</h1>
-        <div class="profiles" id="profiles"></div>
-      </div>
-
-      <!-- Modaler -->
-      <div class="modal" id="addProfileModal" role="dialog" aria-modal="true">
-        <div class="modal-content">
-          <h2>Opprett ny profil</h2>
-          <input type="text" id="newProfileName" placeholder="Skriv profilnavn..." maxlength="15">
+      <!-- FILMKATALOG RAD -->
+      <section class="catalog-section" id="originals">
+        <h2 class="row-title">Watch Nordic Originals</h2>
+        <div class="movie-carousel" id="movie-list">
           
-          <label class="checkbox-container">
-            <input type="checkbox" id="isKidsProfile">
-            Dette er en barneprofil
-          </label>
+          <article class="movie-card" data-id="1" data-title="Nordlysjakten" data-desc="En spektakulær dokumentarserie om oppdagere i Arktis." data-img="https://picsum.photos/id/1018/300/450">
+            <img src="https://picsum.photos/id/1018/300/450" alt="Nordlysjakten">
+            <div class="card-info">
+              <h3>Nordlysjakten</h3>
+            </div>
+          </article>
 
-          <div class="modal-actions">
-            <button type="button" class="btn-create" id="btnCreateProfile">Opprett profil</button>
-            <button type="button" class="btn-close" id="btnCloseModal">Avbryt</button>
-          </div>
-        </div>
-      </div>
+          <article class="movie-card" data-id="2" data-title="Vintermørke" data-desc="Mørke hemmeligheter avdekkes i en liten svensk grenseby." data-img="https://picsum.photos/id/1025/300/450">
+            <img src="https://picsum.photos/id/1025/300/450" alt="Vintermørke">
+            <div class="card-info">
+              <h3>Vintermørke</h3>
+            </div>
+          </article>
 
-      <div class="pin-modal" id="pinModal" role="dialog" aria-modal="true">
-        <div class="pin-modal-content">
-          <h2>Skriv koden</h2>
-          <p class="pin-profile-name" id="pinProfileName">Profil</p>
-          <input type="password" id="pinInput" class="pin-input" maxlength="4" inputmode="numeric" readonly>
+          <article class="movie-card" data-id="3" data-title="Fjordens Voktere" data-desc="Dramatisk film om kystvakten på Vestlandet." data-img="https://picsum.photos/id/1036/300/450">
+            <img src="https://picsum.photos/id/1036/300/450" alt="Fjordens Voktere">
+            <div class="card-info">
+              <h3>Fjordens Voktere</h3>
+            </div>
+          </article>
 
-          <div class="pin-keypad">
-            <button type="button" class="pin-key" data-value="1">1</button>
-            <button type="button" class="pin-key" data-value="2">2</button>
-            <button type="button" class="pin-key" data-value="3">3</button>
-            <button type="button" class="pin-key" data-value="4">4</button>
-            <button type="button" class="pin-key" data-value="5">5</button>
-            <button type="button" class="pin-key" data-value="6">6</button>
-            <button type="button" class="pin-key" data-value="7">7</button>
-            <button type="button" class="pin-key" data-value="8">8</button>
-            <button type="button" class="pin-key" data-value="9">9</button>
-            <button type="button" class="pin-key is-danger" id="pinKeyClear">Slett</button>
-            <button type="button" class="pin-key" data-value="0">0</button>
-            <button type="button" class="pin-key is-action" id="pinKeyBack">Tilbake</button>
-          </div>
+          <article class="movie-card" data-id="4" data-title="Vikingariket" data-desc="Eksklusiv storsatsing basert på nordisk mytologi." data-img="https://picsum.photos/id/1043/300/450">
+            <img src="https://picsum.photos/id/1043/300/450" alt="Vikingariket">
+            <div class="card-info">
+              <h3>Vikingariket</h3>
+            </div>
+          </article>
 
-          <div class="pin-actions">
-            <button type="button" class="btn-create" id="btnConfirmPin">Bekreft</button>
-            <button type="button" class="btn-close" id="btnClosePin">Avbryt</button>
-          </div>
-          <div class="pin-error" id="pinError" role="alert"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. Hovedside -->
-    <section id="view-hovedside" class="view-page hidden" aria-hidden="true">
-      <section class="hero-banner">
-        <img class="banner-image" id="banner-bilde" src="https://via.placeholder.com/1920x1080" alt="Film Banner" />
-        <video id="banner-video" class="banner-video" playsinline preload="none"></video>
-
-        <div class="banner-content">
-          <span class="badge-original"><i class="fas fa-star"></i> Watch Original</span>
-          <h1 class="hero-title" id="banner-tittel">Nordisk Mørke</h1>
-          <img class="film-logo" id="banner-logo" src="https://via.placeholder.com/320x180?text=LOGO" alt="Film Logo" style="display:none;" />
-          <p id="banner-beskrivelse">En nervepirrende krimserie satt i det nordnorske vinterlandskapet. Når en hemmelighet avdekkes på fjellet, endres alt.</p>
-          <div id="banner-metadata" class="banner-meta">2026 • 16+ • 2t 15m</div>
-          <div class="banner-buttons">
-            <button type="button" class="watch-button" id="banner-se-na">
-              <i class="fas fa-play"></i> Se nå
-            </button>
-            <button type="button" class="add-button" id="banner-add" aria-label="Legg til i min liste">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Galleri-rader -->
-      <section class="gallery-section" id="nye-filmer-seksjon">
-        <h2>Nylig lagt til</h2>
-        <div class="gallery-wrapper">
-          <div class="fade-left"></div>
-          <button type="button" class="scroll-button left" aria-label="Rull til venstre">❮</button>
-          <div class="image-gallery" id="nye-filmer-galleri"></div>
-          <button type="button" class="scroll-button right" aria-label="Rull til høyre">❯</button>
-          <div class="fade-right"></div>
-        </div>
-      </section>
-
-      <section class="continue-watching-section" id="fortsett-section" style="display:none;">
-        <h2>Fortsett å se</h2>
-        <div class="continue-gallery-wrapper">
-          <div class="fade-left"></div>
-          <button type="button" class="scroll-button left" aria-label="Rull til venstre">❮</button>
-          <div class="continue-image-gallery" id="fortsett-galleri"></div>
-          <button type="button" class="scroll-button right" aria-label="Rull til høyre">❯</button>
-          <div class="fade-right"></div>
         </div>
       </section>
     </section>
 
-    <!-- 5. Filmlayout (Detaljside) -->
-    <section id="view-filmlayout" class="view-page hidden" aria-hidden="true">
-      <div class="hero">
-        <img class="background-image" id="backgroundImage" src="" alt="Bakgrunnsbilde" />
-        <video id="trailerVideo" class="background-video" muted playsinline></video>
-
-        <div class="overlay"></div>
-        <div class="bottom-fade"></div>
-
-        <div id="videoControls" class="video-controls">
-          <button type="button" id="pauseBtn" aria-label="Pause"><i class="fas fa-pause"></i></button>
-          <button type="button" id="soundBtn" aria-label="Lyd av/på"><i class="fas fa-volume-mute"></i></button>
-        </div>
-
-        <div class="content-wrapper">
-          <div class="logo-container">
-            <img class="film-logo" src="" alt="Filmlogo" />
-          </div>
-
-          <div class="left-content">
-            <div class="text-button-container">
-              <div class="buttons-column">
-                <button type="button" class="watch-button" id="watchBtn">
-                  <i class="fas fa-play"></i><span> Se nå</span>
-                </button>
-                <button type="button" class="watch-button" id="addToListBtn">
-                  <i class="fas fa-plus"></i><span> Legg til i Min liste</span>
-                </button>
-              </div>
-
-              <div class="text-container">
-                <p class="description"></p>
-                <div class="metadata"></div>
-                <div class="availability-info" id="availabilityInfo"></div>
-              </div>
-              <div class="cast-info"></div>
-            </div>
+    <!-- 5. FILMLAYOUT / DETALJER VIEW -->
+    <section id="detail-view" class="view">
+      <div class="detail-backdrop" id="detail-bg">
+        <div class="detail-gradient"></div>
+        <div class="detail-container">
+          <h1 id="detail-title">Film Tittel</h1>
+          <p id="detail-description">Filmbeskrivelse vil vises her...</p>
+          <div class="detail-buttons">
+            <button class="btn btn-primary" id="detail-play-btn">▶ Start avspilling</button>
+            <button class="btn btn-secondary" id="detail-back-btn">Tilbake til katalog</button>
           </div>
         </div>
-      </div>
-
-      <div class="recommendations">
-        <h2>Anbefalt til deg</h2>
-        <div class="gallery" id="recommendationGallery"></div>
       </div>
     </section>
 
-    <!-- 6. Profil og Konto -->
-    <section id="view-profil" class="view-page hidden" aria-hidden="true">
-      <header>
-        <div class="logo-container">
-          <img src="https://static.wixstatic.com/media/d9ace9_081ea242211b45a2801873c3067e1205~mv2.png" alt="Watch Nordic Logo" class="logo-image">
+    <!-- 6. EGEN FILMSPILLER VIEW -->
+    <section id="player-view" class="view">
+      <button class="close-player-btn" id="close-player-btn">← Lukk spiller</button>
+      <div class="video-wrapper">
+        <video id="main-video-player" controls preload="metadata">
+          <source id="video-source" src="" type="video/mp4">
+          Nettleseren din støtter ikke HTML5-video.
+        </video>
+      </div>
+    </section>
+
+    <!-- 7. KONTO VIEW -->
+    <section id="account-view" class="view">
+      <div class="account-card">
+        <h2>Min Konto</h2>
+        <div class="account-details">
+          <div class="account-row">
+            <span>Abonnement:</span>
+            <strong>Watch Nordic Premium (4K)</strong>
+          </div>
+          <div class="account-row">
+            <span>Pris:</span>
+            <span>119 NOK / mnd</span>
+          </div>
+          <div class="account-row">
+            <span>E-post:</span>
+            <span id="user-email-display">ole@nordic.no</span>
+          </div>
         </div>
-        <div class="nav-btns">
-          <button type="button" id="navHovedsideBtn"><i class="fa-solid fa-house"></i> <span>Hovedside</span></button>
-          <button type="button" class="logout-btn" id="navLoggUtBtn"><i class="fa-solid fa-right-from-bracket"></i> <span>Logg Ut</span></button>
-        </div>
-      </header>
-
-      <div class="container">
-        <div class="profile-header">
-          <div class="profile-info">
-            <h1 id="navnDisplay">Laster...</h1>
-            <p>Aktiv profil</p>
-          </div>
-
-          <div class="avatar-wrapper" id="avatarContainer" title="Klikk for å endre profilbilde">
-            <img id="profilbilde" class="avatar-img" src="" alt="Profilbilde">
-            <div class="edit-badge"><i class="fa-solid fa-pencil"></i></div>
-          </div>
-        </div>
-
-        <section class="content">
-          <h2><i class="fa-solid fa-user"></i> Kontoinformasjon</h2>
-          <div class="card">
-            <div class="row">
-              <div class="info-block">
-                <div class="label">Profilnavn</div>
-                <div class="value" id="navnView">Laster...</div>
-                <div id="editNavnBox" class="edit-box hidden">
-                  <input type="text" id="nyttNavnInput" placeholder="Nytt navn">
-                  <button type="button" class="btn-save" id="lagreNavnBtn">Lagre</button>
-                  <button type="button" class="btn-cancel" id="avbrytNavnBtn">Avbryt</button>
-                </div>
-              </div>
-              <button type="button" class="edit-trigger" id="endreNavnKnapp">Endre</button>
-            </div>
-            
-            <div class="row">
-              <div class="info-block">
-                <div class="label">E-postadresse (Konto)</div>
-                <div class="value" id="epostView">Laster...</div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="info-block">
-                <div class="label">Inngangskode</div>
-                <div class="value" id="pinView">Laster...</div>
-
-                <div class="pin-toggle-wrap">
-                  <button type="button" class="pin-toggle" id="pinToggleBtn" aria-pressed="false">
-                    <span class="pin-toggle-thumb"></span>
-                    <span class="pin-toggle-text">Kode av</span>
-                  </button>
-                </div>
-
-                <div id="editPinBox" class="edit-box hidden">
-                  <input type="password" id="nyPinInput" placeholder="Skriv ny kode">
-                  <button type="button" class="btn-save" id="lagrePinBtn">Lagre</button>
-                  <button type="button" class="btn-cancel" id="avbrytPinBtn">Avbryt</button>
-                </div>
-                <div class="pin-hint">Slå på for å aktivere eller deaktivere koden.</div>
-              </div>
-            </div>
-          </div>
-
-          <h2><i class="fa-solid fa-tv"></i> Enheter</h2>
-          <div class="card">
-            <div class="row">
-              <div class="info-block">
-                <div class="label">Aktiv økt</div>
-                <div class="value">Nettleser (Norge)</div>
-              </div>
-              <button type="button" class="edit-trigger" id="loggutAlleBtn">Logg ut alle enheter</button>
-            </div>
-          </div>
-
-          <div class="delete-container">
-            <button type="button" class="delete-btn" id="sletteKnapp"><i class="fa-solid fa-trash-can"></i> Slett profil permanent</button>
-          </div>
-        </section>
+        <button class="btn btn-secondary" id="account-back-btn">Tilbake til appen</button>
       </div>
     </section>
 
   </main>
 
-  <!-- 7. Spiller -->
-  <div id="view-player" class="modal-overlay hidden" aria-hidden="true">
-    <div class="container" id="container">
-      <div id="videoWrapper">
-        <video id="video" preload="metadata" playsinline>
-          <source src="" type="video/mp4">
-          <track label="Norsk" kind="subtitles" srclang="no" src="" default>
-          Din nettleser støtter ikke videoavspilling.
-        </video>
-      </div>
-
-      <div class="subtitle-overlay" id="subtitleOverlay"></div>
-      <div class="loading-spinner" id="loadingSpinner"></div>
-
-      <button type="button" id="skipIntroBtn" class="skip-btn">
-        <i class="fa-solid fa-forward" style="margin-right: 5px;"></i> Hopp over intro
-      </button>
-
-      <button type="button" id="skipOutroBtn" class="skip-btn">
-        Neste episode <i class="fa-solid fa-forward" style="margin-left: 5px;"></i>
-      </button>
-
-      <!-- Autoplay Overlay -->
-      <div id="autoplayOverlay">
-        <div class="autoplay-content">
-          <img id="autoplayLogo" class="autoplay-serie-logo" alt="Serie Logo" style="display: none;">
-          <div class="autoplay-episode-meta">
-            <span id="autoplayEpTag" class="autoplay-ep-tag"></span>
-            <span id="autoplayEpTitle" class="autoplay-ep-title"></span>
-          </div>
-          <p id="autoplayEpDesc" class="autoplay-ep-desc"></p>
-          <div class="autoplay-action-row">
-            <button type="button" id="autoplayPlayNextBtn" class="autoplay-btn">
-              <i class="fa-solid fa-play"></i> Spill nå
-            </button>
-            <button type="button" id="autoplayCancelBtn" class="autoplay-btn">Avbryt</button>
-            
-            <div class="autoplay-circle-timer">
-              <svg class="timer-svg" viewBox="0 0 36 36">
-                <path class="timer-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path id="timerProgress" class="timer-progress" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              </svg>
-              <div id="autoplayCountdown" class="timer-number">8</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Resume Overlay -->
-      <div id="resumeOverlay" class="resume-overlay">
-        <div class="resume-box">
-          <p>Vil du fortsette der du slapp?</p>
-          <div class="resume-buttons">
-            <button type="button" id="continueBtn">Fortsett</button>
-            <button type="button" id="restartBtn">Start på nytt</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Controls -->
-      <div class="ui" id="ui">
-        <div class="top-bar">
-          <div class="top-bar-left">
-            <button type="button" class="back-button" id="backButton" aria-label="Tilbake">
-              <i class="fa-solid fa-chevron-left" style="color: white; font-size: 20px;"></i>
-            </button>
-            <div class="movie-title">Laster tittel...</div>
-          </div>
-          
-          <div class="volume-container">
-            <button type="button" class="btn" id="muteBtn" title="Lyd av/på">
-              <i class="fa-solid fa-volume-high" style="color: white; font-size: 18px;"></i>
-            </button>
-            <div class="volume-slider-wrapper">
-              <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="1" style="--volume-percent: 100%;">
-            </div>
-          </div>
-        </div>
-
-        <div class="progress-container">
-          <div class="progress" id="progress">
-            <div class="progress-filled" id="progressFilled"></div>
-            <div class="thumb" id="thumb"></div>
-          </div>
-        </div>
-
-        <div class="preview-box" id="previewBox">
-          <img id="previewImage" src="" alt="Forhåndsvisning">
-          <div class="preview-time" id="previewTime">00:00</div>
-        </div>
-
-        <span class="time-display" id="timeDisplay">00:00</span>
-
-        <div class="controls">
-          <div class="left-controls"></div>
-
-          <div class="center-controls">
-            <button type="button" class="btn" id="rewindBtn" title="10 sekunder tilbake">
-              <i class="fa-solid fa-rotate-left" style="color: white; font-size: 20px;"></i>
-            </button>
-            <button type="button" class="btn" id="playPauseBtn" title="Spill / Pause">
-              <i class="fa-solid fa-play" style="color: white; font-size: 24px;"></i>
-            </button>
-            <button type="button" class="btn" id="forwardBtn" title="10 sekunder frem">
-              <i class="fa-solid fa-rotate-right" style="color: white; font-size: 20px;"></i>
-            </button>
-          </div>
-
-          <div class="right-controls">
-            <button type="button" id="nextEpisodeBtn" class="btn">
-              Neste <i class="fa-solid fa-forward" style="margin-left: 3px; font-size: 12px;"></i>
-            </button>
-            <button type="button" class="btn" id="captionsBtn" title="Undertekster og lydspråk">
-              <i class="fa-solid fa-closed-captioning" style="color: white; font-size: 20px;"></i>
-            </button>
-            <button type="button" class="btn" id="fullscreenBtn" title="Fullskjerm">
-              <i class="fa-solid fa-expand" style="color: white; font-size: 20px;"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="caption-menu" id="captionMenu">
-          <div class="caption-menu-header">
-            <h3>Lyd og undertekster</h3>
-            <button type="button" class="caption-menu-close" id="closeCaptionMenuBtn" aria-label="Lukk">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-          
-          <div class="caption-menu-grid">
-            <div class="caption-column">
-              <div class="caption-column-title">Lyd</div>
-              <div class="caption-track-list" id="audioTracks"></div>
-            </div>
-
-            <div class="caption-column">
-              <div class="caption-column-title">Undertekster</div>
-              <div class="caption-track-list" id="subtitleTracks"></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-socials">
-      <a href="https://www.instagram.com/watchnordicoriginals?igsh=aWRvcTJmMWl1NGRp&utm_source=qr" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@watchnordicoriginals" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
-    </div>
-
-    <div class="footer-links">
-      <a href="#">Om Watch Nordic</a>
-      <a href="#">Kontakt oss</a>
-      <a href="#">Personvern</a>
-      <a href="#">Hjelpesenter</a>
-      <a href="#">Jobber</a>
-      <a href="#">Investorinformasjon</a>
-      <a href="#">Vilkår</a>
-      <a href="#">Informasjonskapsler</a>
-      <a href="#">Juridisk informasjon</a>
-      <a href="#">Bedriftskonto</a>
-      <a href="#">Gavekort</a>
-      <a href="#">Enheter</a>
-    </div>
-
-    <div class="footer-copy">
-      © 2026 Watch Nordic™
-    </div>
-
-    <div class="footer-bottom">
-      Alle varemerker fra WATCH NORDIC™, WATCH NORDIC ORIGINALS™ og alle øvrige tilknyttede immaterielle rettigheter tilhører Watch Nordic Group og brukes under lisens av Watch Nordic™. Alle varemerker, logoer, filmer, serier, bilder, design og øvrige tilknyttede immaterielle rettigheter tilhører sine respektive eiere. Alt innhold er beskyttet av opphavsrett og internasjonale varemerkelover. Alle rettigheter forbeholdt.
-    </div>
-  </footer>
-
-  <script type="module" src="./js/app.js"></script>
+  <!-- KOBLE TIL EKSTERNE JAVASCRIPT-FILER (Ligger i mappen: js/) -->
+  <script src="js/app.js"></script>
+  <script src="js/player.js"></script>
 </body>
 </html>
